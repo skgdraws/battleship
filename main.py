@@ -1,13 +1,8 @@
-import pygame
-import sys
+from curses import window
+import tkinter as tk
 
-pygame.init()
-screen = pygame.display.set_mode((1280, 720))
+window = tk.Tk()
+window.title("Menu")
+window.geometry("1280x720")
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-    pygame.display.update()
-
+window.mainloop
