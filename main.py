@@ -1,7 +1,10 @@
 import tkinter as tk
+from tkinter.font import Font
 
 window= tk.Tk()
 window.geometry("1280x720")
+
+fuente= Font(family= "sonic-1-hud-font", size= 60)
 
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
@@ -12,7 +15,7 @@ def main():
         canvas.destroy()
         canvas.quit
         highscore()
-    hs_b= tk.Button(canvas, text= "HighScore", bg= "black", fg="white", command= open_hs)
+    hs_b= tk.Button(canvas, text= "HighScore", font= "sonic-1-hud-font", bg= "black", fg="white", command= open_hs)
     hs_b.place(x= 300, y= 300)
 
     #Boton para ayuda
@@ -20,7 +23,7 @@ def main():
         canvas.destroy()
         canvas.quit
         help()
-    help_b= tk.Button(canvas, text= "Ayuda", bg= "black", fg="white", command= open_h)
+    help_b= tk.Button(canvas, text= "?", bg= "black", fg="white", command= open_h)
     help_b.place(x= 200, y= 200)
 
     #Boton para cerrar el juego
@@ -33,7 +36,7 @@ def main():
 main()
 
 def highscore():
-    hs_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="red")
+    hs_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     hs_canvas.pack()
     
     #Boton para cerrar salon de la fama
@@ -45,7 +48,7 @@ def highscore():
     closehs_b.place(x=100, y=100)
 
 def help():
-    help_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
+    help_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     help_canvas.pack()
 
     #Boton para cerrar ayuda
