@@ -27,7 +27,7 @@ def main():
     def quit():
         window.destroy()
         window.quit
-    quit_b= tk.Button(canvas, text= "QUIT", bg= "black", fg="white", command= quit)
+    quit_b= tk.Button(canvas, text= "Quit", bg= "black", fg="white", command= quit)
     quit_b.place(x= 100, y= 100)
 
 main()
@@ -35,9 +35,25 @@ main()
 def highscore():
     hs_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="red")
     hs_canvas.pack()
+    
+    #Boton para cerrar salon de la fama
+    def close_hs():
+        hs_canvas.destroy()
+        hs_canvas.quit
+        main()
+    closehs_b= tk.Button(hs_canvas, text= "Volver", bg= "black", fg="white", command= close_hs)
+    closehs_b.place(x=100, y=100)
 
 def help():
     help_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
     help_canvas.pack()
+
+    #Boton para cerrar ayuda
+    def close_help():
+        help_canvas.destroy()
+        help_canvas.quit
+        main()
+    close_help_b= tk.Button(help_canvas, text= "Volver", bg= "black", fg="white", command= close_help)
+    close_help_b.place(x= 100, y= 100)
 
 window.mainloop()
