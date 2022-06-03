@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter.font import Font
 
 def main():
 
@@ -11,7 +10,7 @@ def main():
     help_canva = tk.Canvas(window,  width=1280, height=720, borderwidth=0, highlightthickness=0, bg="#000000")
     help_canva.place(x=0, y=0)
 
-    title = tk.Label(canvas, text= "Battleship", font= "Sonic 1 HUD Font", bg= "black", fg= "white")
+    title = tk.Label(canvas, text= "Battleship", font= "Sonic-1-HUD-Font.ttf", bg= "black", fg= "white")
     title.place(x= 100, y= 100)
 
    
