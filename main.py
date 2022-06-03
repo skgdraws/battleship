@@ -8,7 +8,8 @@ def main():
     canvas = tk.Canvas(window,  width=1280, height=720, borderwidth=0, highlightthickness=0, bg="#000000")
     canvas.place(x=0, y=0)
 
-    main = tk.Canvas(window, width= 1280, height= 720, borderwidth= 0, bg= "black")
-    main.pack()
+    #hola
 
     window.mainloop()
+
+main()
