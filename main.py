@@ -4,8 +4,6 @@ from tkinter.font import Font
 window= tk.Tk()
 window.geometry("1280x720")
 
-fuente= Font(family= "sonic-1-hud-font", size= 60)
-
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     canvas.pack()
@@ -15,7 +13,7 @@ def main():
         canvas.destroy()
         canvas.quit
         highscore()
-    hs_b= tk.Button(canvas, text= "HighScore", font= "sonic-1-hud-font", bg= "black", fg="white", command= open_hs)
+    hs_b= tk.Button(canvas, text= "HighScore", font= "Sonic 1 HUD Font", bg= "black", fg="white", command= open_hs)
     hs_b.place(x= 300, y= 300)
 
     #Boton para ayuda
