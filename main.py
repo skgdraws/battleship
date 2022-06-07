@@ -4,16 +4,22 @@ from tkinter.font import Font
 window= tk.Tk()
 window.geometry("1280x720")
 
+
+
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     canvas.pack()
+
+    #Titulo
+    title= tk.Label(canvas, text= "BATTLESHIP!", font= ("Sonic 1 HUD Font", 10), bg= "black", fg= "white")
+    title.place(x= 640, y= 100)
 
     #Boton para salon de la fama
     def open_hs():
         canvas.destroy()
         canvas.quit
         highscore()
-    hs_b= tk.Button(canvas, text= "HighScore", font= "Sonic 1 HUD Font", bg= "black", fg="white", command= open_hs)
+    hs_b= tk.Button(canvas, text= "HighScore", font= ("Sonic 1 HUD Font", 10), bg= "black", fg="white", command= open_hs)
     hs_b.place(x= 300, y= 300)
 
     #Boton para ayuda
