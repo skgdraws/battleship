@@ -1,6 +1,11 @@
 import pygame
 import sys
 
+pygame.init()
+pantalla = pygame.display.set_mode((1280, 720))
+pygame.display.set_caption("Battleship")
+clock = pygame.time.Clock()
+
 class Juego:
 
     def __init__(self, pantalla):
@@ -13,13 +18,7 @@ class Juego:
         pass
 
     def run(self):
-        pass
-
-
-pygame.init()
-pantalla = pygame.display.set_mode((1280, 720))
-pygame.display.set_caption("Battleship")
-clock = pygame.time.Clock()
+        self.set_tablero()
 
 juego = Juego(pantalla)
 
