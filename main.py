@@ -1,4 +1,6 @@
+from email.mime import image
 import tkinter as tk
+from PIL import ImageTk, Image
 
 window= tk.Tk()
 window.geometry("1280x720")
@@ -8,8 +10,8 @@ def main():
     canvas.pack()
 
     #Titulo
-    title= tk.Label(canvas, text= "BATTLESHIP!", font= ("Sonic 1 HUD Font", 80), bg= "black", fg= "white")
-    title.place(x= 386, y= 100)
+    title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
+    canvas.create_image(100, 100, anchor= tk.NW, image= title)
 
     #Boton seleccionar una partida
     def open_p():
