@@ -1,6 +1,7 @@
 from email.mime import image
 import tkinter as tk
 from PIL import ImageTk, Image
+from support import *
 
 window= tk.Tk()
 window.geometry("1280x720")
@@ -11,7 +12,7 @@ def main():
 
     #Titulo
     title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
-    canvas.create_image(100, 100, anchor= tk.NW, image= title)
+    canvas.create_image(100, 100, anchor= tk.NW, image=title)
 
     #Boton seleccionar una partida
     def open_p():
@@ -68,9 +69,92 @@ def play():
     fileb_3.place(x= 464, y= 500)
 
 def highscore():
+
     hs_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     hs_canvas.pack()
     
+    score1 = tk.Label(text=f"1st.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
+    score1.place(x= 480, y= 240)
+
+    score2 = tk.Label(text=f"2nd.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
+    score2.place(x= 480, y= 320)
+
+    score3 = tk.Label(text=f"3rd.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
+    score3.place(x= 480, y= 400)
+
+    score4 = tk.Label(text=f"4rd.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
+    score4.place(x= 480, y= 480)
+
+    score5 = tk.Label(text=f"5th.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
+    score5.place(x= 480, y= 560)
+
+    def organize_score_list():
+        lista = import_scores("assets/data/scores.csv")
+        reorganize = []
+
+        return organizar(lista, reorganize)
+
+    def organizar(lista, reorden): 
+        if lista == []: 
+            return reorden
+        else: 
+            buscar_mayor = buscar(lista, mayor(lista), 0)
+            return organizar(eliminar(lista, buscar_mayor, []), reorden + [buscar_mayor])
+
+    def eliminar(lista, buscar_mayor, nueva_lista): 
+        if lista == []: 
+            return nueva_lista
+        elif lista[0] == buscar_mayor: 
+            return eliminar(lista[1:], buscar_mayor, nueva_lista)
+        else: 
+            return eliminar(lista[1:], buscar_mayor, [lista[0]] + nueva_lista)
+
+    def buscar(lista, num, i): 
+        if num == int(lista[i][0]):
+            return lista[i]
+        else: 
+            return buscar(lista, num, i + 1)
+
+    def mayor(lista): 
+        if lista[1:] == []: 
+            return int(lista[0][0])
+        else: 
+            return compara(int(lista[0][0]), mayor(lista[1:]))
+
+    def compara(x, y): 
+        if x > y: 
+            return x
+        else: 
+            return y
+
+    def set_scores(lista):
+
+        if lista == []:
+            return
+        
+        else:
+            if lista[4][0] != '':
+
+                score5.config(text= '5th. ' + lista[0][0] + ' turnos - ' + lista[0][1])
+
+            if lista[3][0] != '':
+
+                score4.config(text= '4th. ' + lista[1][0] + ' turnos - ' + lista[1][1])
+            if lista[2][0] != '':
+
+                score3.config(text= '3rd. ' + lista[2][0] + ' turnos - ' + lista[2][1])
+
+            if lista[1][0] != '':
+
+                score2.config(text= '2nd. ' + lista[3][0] + ' turnos - ' + lista[3][1])
+
+            if lista[0][0] != '':
+
+                score1.config(text= '1st. ' + lista[4][0] + ' turnos - ' + lista[4][1])
+
+    scores = organize_score_list()
+    set_scores(scores)
+
     #Boton para cerrar salon de la fama
     def close_hs():
         hs_canvas.destroy()
