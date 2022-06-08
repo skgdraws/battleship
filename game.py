@@ -1,38 +1,31 @@
-import pygame
 import sys
-from csv import *
+from support import *
+import pygame
 
 pygame.init()
 pantalla = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Battleship")
 clock = pygame.time.Clock()
 
-def import_layout(path):
-    maps = []
-    # Opening up the csv File
-    with open(path) as map:
-        level = reader(map, delimiter = ',')
-        for row in level:
-            maps.append(list(row))
-        return maps
-
 class Juego:
-
-    def __init__(self, pantalla, path):
+    def __init__(self, pantalla):
         
         #Variables para la lógica del juego
         self.turnos = 0
         self.pantalla = pantalla
-        self.path = f"assets/data/safe{path}/game.csv"
+        self.save_game = None
 
     def set_tablero(self, layout):
-        thing = import_layout(layout)
-        print(thing)
+        pass
 
     def run(self):
-        self.set_tablero(self.path)
+        self.set_tablero(1)
 
-juego = Juego(pantalla,1)
+class Tiles(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+
+juego = Juego(pantalla)
 
 while True:
 
@@ -41,7 +34,7 @@ while True:
             pygame.quit()
             sys.exit()
 
-    pantalla.fill("#000000")
+    pantalla.fill("#3333A4")
     pygame.display.update()
     juego.run()
     clock.tick(60)

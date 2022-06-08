@@ -5,6 +5,7 @@
   * El Tablero
   * Sistema de Ataque
   * Arte y Sonido
+  * Sistema de Guardado
 
 ## Lo que debe hacer Javier
   * Pantalla Principal
