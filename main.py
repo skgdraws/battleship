@@ -1,4 +1,3 @@
-from email.mime import image
 import tkinter as tk
 from PIL import ImageTk, Image
 from support import *
