@@ -4,6 +4,7 @@ from support import *
 
 window= tk.Tk()
 window.geometry("1280x720")
+window.resizable(False, False)
 
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
@@ -11,7 +12,7 @@ def main():
 
     #Titulo
     title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
-    canvas.create_image(100, 100, anchor= tk.NW, image=title)
+    canvas.create_image(350, 100, anchor= tk.NW, image=title)
 
     #Boton seleccionar una partida
     def open_p():
@@ -44,7 +45,8 @@ def main():
     help_b= tk.Button(canvas, text= " ? ", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= open_h)
     help_b.place(x= 1200, y= 40)
 
-main()
+    window.mainloop()
+
 
 def play():
     p_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
@@ -67,11 +69,16 @@ def play():
     fileb_3= tk.Button(p_canvas, text= " File 3 ", font= ("Sonic 1 HUD Font", 60), bg= "black", fg="white")
     fileb_3.place(x= 464, y= 500)
 
+    p_canvas.mainloop()
+
 def highscore():
 
     hs_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     hs_canvas.pack()
     
+    logo = ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
+    hs_canvas.create_image(350, 100, anchor = tk.NW, image= logo)
+
     score1 = tk.Label(text=f"1st.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
     score1.place(x= 480, y= 240)
 
@@ -162,6 +169,8 @@ def highscore():
     closehs_b= tk.Button(hs_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_hs)
     closehs_b.place(x=50, y=50)
 
+    hs_canvas.mainloop()
+
 def help():
     help_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     help_canvas.pack()
@@ -174,4 +183,6 @@ def help():
     close_help_b= tk.Button(help_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_help)
     close_help_b.place(x= 50, y= 50)
 
-window.mainloop()
+    help_canvas.mainloop()
+
+main()
