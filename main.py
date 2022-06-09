@@ -1,7 +1,9 @@
 import tkinter as tk
+import pygame
 from PIL import ImageTk, Image
 from support import *
 
+pygame.init()
 window= tk.Tk()
 window.geometry("1280x720")
 window.resizable(False, False)
@@ -12,7 +14,7 @@ def main():
 
     #Titulo
     title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
-    canvas.create_image(350, 100, anchor= tk.NW, image=title)
+    canvas.create_image(640, 25, anchor= tk.N, image=title)
 
     #Boton seleccionar una partida
     def open_p():
@@ -47,7 +49,6 @@ def main():
 
     window.mainloop()
 
-
 def play():
     p_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     p_canvas.pack()
@@ -57,6 +58,7 @@ def play():
         p_canvas.destroy()
         p_canvas.quit
         main()
+
     closep_b= tk.Button(p_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_p)
     closep_b.place(x= 50, y= 50)
 
@@ -77,22 +79,22 @@ def highscore():
     hs_canvas.pack()
     
     logo = ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
-    hs_canvas.create_image(350, 100, anchor = tk.NW, image= logo)
+    hs_canvas.create_image(640, 25, anchor = tk.N, image= logo)
 
     score1 = tk.Label(text=f"1st.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
-    score1.place(x= 480, y= 240)
+    score1.place(x= 450, y= 250)
 
     score2 = tk.Label(text=f"2nd.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
-    score2.place(x= 480, y= 320)
+    score2.place(x= 450, y= 330)
 
     score3 = tk.Label(text=f"3rd.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
-    score3.place(x= 480, y= 400)
+    score3.place(x= 450, y= 410)
 
     score4 = tk.Label(text=f"4rd.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
-    score4.place(x= 480, y= 480)
+    score4.place(x= 450, y= 490)
 
     score5 = tk.Label(text=f"5th.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
-    score5.place(x= 480, y= 560)
+    score5.place(x= 450, y= 570)
 
     def organize_score_list():
         lista = import_scores("assets/data/scores.csv")
