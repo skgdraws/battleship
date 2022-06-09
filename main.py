@@ -6,6 +6,7 @@ from support import *
 pygame.init()
 window= tk.Tk()
 window.geometry("1280x720")
+window.title("Main Menu")
 window.resizable(False, False)
 
 def main():
@@ -15,8 +16,6 @@ def main():
     #Titulo
     title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
     canvas.create_image(240, 65, anchor= tk.NW, image=title)
-
-
 
     #Boton seleccionar una partida
     def open_p():
@@ -182,7 +181,37 @@ def help():
         help_canvas.quit
         main()
     close_help_b= tk.Button(help_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_help)
-    close_help_b.place(x= 50, y= 50)
+    close_help_b.place(x= 50, y= 40)
+
+    title1= tk.Label(help_canvas, text= "Hola! Bienvenido a Battleship", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title1.place(x= 50, y=110)
+
+    title2= tk.Label(help_canvas, text= "En este juego, tu objetivo sera hundir los tres barcos enemigos", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title2.place(x= 50, y=160)
+
+    title3= tk.Label(help_canvas, text= "Esto sera logrado mediante el uso de dos tableros de 10x10", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title3.place(x= 50, y=210)
+
+    title4= tk.Label(help_canvas, text= "El primero de estos sera el tablero del jugador, en el cual debera colocar 3 barcos ", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title4.place(x= 50, y=260)
+
+    title5= tk.Label(help_canvas, text= "ya sea de manera horizontal o vertical", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title5.place(x= 50, y=310)
+
+    title6= tk.Label(help_canvas, text= "En este mismo tablero es donde se mostraran las coordenadas en donde dispara la computadora", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title6.place(x= 50, y=360)
+
+    title7= tk.Label(help_canvas, text= "El otro tablero, representara el de la computadora y en este no se mostraran los barcos enemigos", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title7.place(x= 50, y=410)
+
+    title8= tk.Label(help_canvas, text= "Solo se mostrara los puntos donde el jugador ya disparo", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title8.place(x= 50, y=460)
+
+    title9= tk.Label(help_canvas, text= "La manera de hundir un barco, es disparando en cada uno de los espacios que ocupa el mismo", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title9.place(x= 50, y=510)
+
+    title0= tk.Label(help_canvas, text= "El primero en hundir los barcos del oponente, sera el ganador!", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title0.place(x= 50, y=560)
 
     help_canvas.mainloop()
 
