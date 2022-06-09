@@ -1,7 +1,7 @@
 # battleship
 
 ## Lo que debe hacer Franco
-  * Salón de la Fama
+  * Salón de la Fama - Listo
   * El Tablero
   * Sistema de Ataque
   * Arte y Sonido
