@@ -183,6 +183,9 @@ def help():
     close_help_b= tk.Button(help_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_help)
     close_help_b.place(x= 50, y= 40)
 
+    ship1= ImageTk.PhotoImage(Image.open('assets/images/barco3-side.png'))
+    help_canvas.create_image(100, 650, anchor= tk.NW, image=ship1)
+
     title1= tk.Label(help_canvas, text= "Hola! Bienvenido a Battleship", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title1.place(x= 50, y=110)
 
