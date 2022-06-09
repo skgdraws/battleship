@@ -1,4 +1,4 @@
-# battleship
+# BATTLESHIP! 
 
 ## Lo que debe hacer Franco
   * Salón de la Fama - Listo
