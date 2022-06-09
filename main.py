@@ -12,7 +12,7 @@ def main():
 
     #Titulo
     title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
-    canvas.create_image(350, 100, anchor= tk.NW, image=title)
+    canvas.create_image(240, 65, anchor= tk.NW, image=title)
 
     #Boton seleccionar una partida
     def open_p():
@@ -75,9 +75,6 @@ def highscore():
 
     hs_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     hs_canvas.pack()
-    
-    logo = ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
-    hs_canvas.create_image(350, 100, anchor = tk.NW, image= logo)
 
     score1 = tk.Label(text=f"1st.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
     score1.place(x= 480, y= 240)
