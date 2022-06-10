@@ -81,6 +81,10 @@ class Juego:
                     sprite_group.add(sprite)
 
         return sprite_group
+    
+    #def place_boat():
+        #if event.type == pygame.MOUSEBUTTONDOWN:
+            #print ("hola")
 
     def run(self):
         self.tablero_sprites.draw(self.pantalla)
@@ -93,9 +97,8 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
     
-    def place_boat():
-        print ("g")
         
             
 
