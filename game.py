@@ -41,7 +41,7 @@ class Juego:
     def __init__(self, pantalla):
         
         #Variables para la lógica del juego
-        self.turnos = 0
+        self.turnos = 1
         self.pantalla = pantalla
         self.save_game = 1
 
@@ -93,6 +93,11 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+    
+    def place_boat():
+        print ("g")
+        
+            
 
     pantalla.fill("#3333A4")
     juego.run()
