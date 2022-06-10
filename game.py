@@ -61,8 +61,9 @@ class Juego:
         self.miss.set_volume(0.5)
 
         #Maneja el Tablero
-        tablero_jugador = import_csv_layout(f"assets/data/save{self.save_game}/player1.csv")
-        self.tablero_sprites = self.create_tile_group(tablero_jugador)
+        self.tablero_jugador = import_csv_layout(f"assets/data/save{self.save_game}/player1.csv")
+        self.tablero_sprites = self.create_tile_group(self.tablero_jugador)
+
 
     def create_tile_group(self, layout):
         sprite_group = pygame.sprite.Group()
@@ -70,19 +71,28 @@ class Juego:
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
                 
+                x = (col_index * 64) + 300
+                y = (row_index * 64) + 50
+                
                 if val == "0":
-                    x = (col_index * 64) + 300
-                    y = (row_index * 64) + 50
-
                     surface_tile_list = import_cut_graphics('assets/images/tiles/ground1.png')
                     tile_surface = surface_tile_list[int(val)]
                     sprite = StaticTile((x,y), 64, tile_surface)
 
                     sprite_group.add(sprite)
+                
+                if val == "1":
+                    tile_surface = pygame.image.load("assets/images/barcos/barco1/barco1.png").convert_alpha()
+                    sprite = AnimatedTile((x,y),64, "assets/images/barcos/barco1")
+
+                    sprite_group.add(sprite)
 
         return sprite_group
 
+
+
     def run(self):
+        self.tablero_jugador[1][1] = 1
         self.tablero_sprites.draw(self.pantalla)
 
 juego = Juego(pantalla)
