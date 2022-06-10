@@ -41,7 +41,7 @@ class Juego:
     def __init__(self, pantalla):
         
         #Variables para la lógica del juego
-        self.turnos = 0
+        self.turnos = 1
         self.pantalla = pantalla
         self.save_game = 1
 
@@ -88,6 +88,10 @@ class Juego:
                     sprite_group.add(sprite)
 
         return sprite_group
+    
+    #def place_boat():
+        #if event.type == pygame.MOUSEBUTTONDOWN:
+            #print ("hola")
 
 
 
@@ -103,6 +107,10 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
+    
+        
+            
 
     pantalla.fill("#3333A4")
     juego.run()
