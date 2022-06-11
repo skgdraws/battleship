@@ -3,6 +3,7 @@ import sys
 from support import *
 import pygame
 
+<<<<<<< HEAD
 pygame.init()
 pantalla = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Battleship")
@@ -39,6 +40,8 @@ class Button():
 		else:
 			self.text = self.font.render(self.text_input, True, self.base_color)
 
+=======
+>>>>>>> 9b95b66e247c2ef8a45f3a6c3d084256759a36c2
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, size):
         super().__init__()          #initializes the Sprite module to be used later
