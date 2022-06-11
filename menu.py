@@ -1,4 +1,6 @@
+import random
 import pygame, sys
+from support import *
 
 pygame.init()
 
@@ -23,6 +25,15 @@ class Button():
 		self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
 		self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 
+        #Efectos de Sonido
+		self.select1 = pygame.mixer.Sound("assets/sound/sfx/select1.wav")
+		self.select1.set_volume(0.5)
+		self.select2 = pygame.mixer.Sound("assets/sound/sfx/select2.wav")
+		self.select2.set_volume(0.5)
+		self.select3 = pygame.mixer.Sound("assets/sound/sfx/select3.wav")
+		self.select3.set_volume(0.5)
+		self.select_sounds = [self.select1, self.select2, self.select3]
+
 	def update(self, screen):
 		if self.image is not None:
 			screen.blit(self.image, self.rect)
@@ -30,6 +41,7 @@ class Button():
 
 	def checkForInput(self, position):
 		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
+			self.select_sounds[random.randint(0,2)].play()
 			return True
 		return False
 
@@ -105,13 +117,78 @@ def play():
 def highscore():
     pygame.display.set_caption("HighScore")
 
+    def organize_score_list():
+        lista = import_scores("assets/data/scores.csv")
+        reorganize = []
+
+        return organizar(lista, reorganize)
+
+    def organizar(lista, reorden): 
+        if lista == []: 
+            return reorden
+        else: 
+            buscar_mayor = buscar(lista, mayor(lista), 0)
+            return organizar(eliminar(lista, buscar_mayor, []), reorden + [buscar_mayor])
+
+    def eliminar(lista, buscar_mayor, nueva_lista): 
+        if lista == []: 
+            return nueva_lista
+        elif lista[0] == buscar_mayor: 
+            return eliminar(lista[1:], buscar_mayor, nueva_lista)
+        else: 
+            return eliminar(lista[1:], buscar_mayor, [lista[0]] + nueva_lista)
+
+    def buscar(lista, num, i): 
+        if num == int(lista[i][0]):
+            return lista[i]
+        else: 
+            return buscar(lista, num, i + 1)
+
+    def mayor(lista): 
+        if lista[1:] == []: 
+            return int(lista[0][0])
+        else: 
+            return compara(int(lista[0][0]), mayor(lista[1:]))
+
+    def compara(x, y): 
+        if x > y: 
+            return x
+        else: 
+            return y
+
+
     while True:
         mouse_pos= pygame.mouse.get_pos()
         screen.fill("black")
 
+        scores = organize_score_list()
+
         hs_b= Button(image= None, pos=(90, 60), text_input= "BACK", font= get_font(50), base_color= "White", hovering_color= "#dfe0e8")
         hs_b.changeColor(mouse_pos)
         hs_b.update(screen)
+
+        logo= pygame.image.load("assets/images/logo.png")
+        screen.blit(logo, (230, 50))
+
+        t1= get_font(45).render(f"1st. {scores[-1][-1]} - {scores[-1][0]}", True, "white")
+        t1_rect= t1.get_rect(center= (640, 280))
+        screen.blit(t1, t1_rect)
+
+        t2= get_font(45).render(f"2nd. {scores[-2][-1]} - {scores[-2][0]}", True, "white")
+        t2_rect= t2.get_rect(center= (640, 360))
+        screen.blit(t2, t2_rect)
+
+        t3= get_font(45).render(f"3rd. {scores[-3][-1]} - {scores[-3][0]}", True, "white")
+        t3_rect= t3.get_rect(center= (640, 440))
+        screen.blit(t3, t3_rect)
+
+        t4= get_font(45).render(f"4th. {scores[-4][-1]} - {scores[-4][0]}", True, "white")
+        t4_rect= t4.get_rect(center= (640, 520))
+        screen.blit(t4, t4_rect)
+
+        t5= get_font(45).render(f"5th. {scores[-5][-1]} - {scores[-5][0]}", True, "white")
+        t5_rect= t5.get_rect(center= (640, 600))
+        screen.blit(t5, t5_rect)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

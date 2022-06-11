@@ -125,9 +125,9 @@ class Juego:
                     sprite = AnimatedTile((x,y),64, "assets/images/barcos/barco1")
 
                     sprite_group.add(sprite)
-
+    
                     
-                
+
         return sprite_group
     
     dict= {"barco1":[0,0],"barco2":[0,2],"barco3":[0,3]}
