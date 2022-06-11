@@ -3,10 +3,10 @@ import sys
 from support import *
 import pygame
 
-<<<<<<< HEAD
 pygame.init()
-pantalla = pygame.display.set_mode((1280, 720))
-pygame.display.set_caption("Battleship")
+
+pantalla= pygame.display.set_mode((1280, 720))
+pygame.display.set_caption("Menu")
 clock = pygame.time.Clock()
 
 class Button():
@@ -40,8 +40,6 @@ class Button():
 		else:
 			self.text = self.font.render(self.text_input, True, self.base_color)
 
-=======
->>>>>>> 9b95b66e247c2ef8a45f3a6c3d084256759a36c2
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, size):
         super().__init__()          #initializes the Sprite module to be used later
@@ -100,6 +98,11 @@ class Juego:
         self.tablero_jugador = import_csv_layout(f"assets/data/save{self.save_game}/player1.csv")
         self.tablero_sprites = self.create_tile_group(self.tablero_jugador)
 
+        #Maneja los botones
+        self.mouse_pos= pygame.mouse.get_pos()
+        self.barco1= Button(image= pygame.image.load("assets/images/barcos/barco1/barco1.png"), pos=(640, 400), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
+        self.barco1.changeColor(self.mouse_pos)
+
     def create_tile_group(self, layout):
         
         sprite_group = pygame.sprite.Group()
@@ -131,14 +134,6 @@ class Juego:
     def get_font(self, size):
         return pygame.font.Font("assets/fonts/sonic-1-hud-font.ttf", size)
 
-    
-   
-    mouse_pos= pygame.mouse.get_pos()
-
-    self.barco1= Button(image= pygame.image.load("assets/images/barcos/barco1/barco1.png"), pos=(640, 400), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
-    self.barco1.changeColor(mouse_pos)
-    self.barco1.update(pantalla)
-
     def run(self):
         self.tablero_sprites.draw(self.pantalla)
         self.barco1.update(pantalla)
@@ -153,11 +148,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        
-    
-    
-
-        
+         
     pantalla.fill("#3333A4")
     juego.run()
     pygame.display.update()
