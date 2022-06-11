@@ -3,11 +3,6 @@ import sys
 from support import *
 import pygame
 
-pygame.init()
-pantalla = pygame.display.set_mode((1280, 720))
-pygame.display.set_caption("Battleship")
-clock = pygame.time.Clock()
-
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, size):
         super().__init__()          #initializes the Sprite module to be used later
@@ -105,22 +100,4 @@ class Juego:
         self.tablero_jugador[1][1] = 1
         self.tablero_sprites.draw(self.pantalla)
 
-
-
-juego = Juego(pantalla)
-
-while True:
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-    
-    
-
-        
-    pantalla.fill("#3333A4")
-    juego.run()
-    pygame.display.update()
-    clock.tick(60)
 
