@@ -100,8 +100,14 @@ class Juego:
 
         #Maneja los botones
         self.mouse_pos= pygame.mouse.get_pos()
-        self.barco1= Button(image= pygame.image.load("assets/images/barcos/barco1/barco1.png"), pos=(640, 400), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
+        self.barco1= Button(image= pygame.image.load("assets/images/barcos/barco1/barco1.png"), pos=(1100, 200), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
         self.barco1.changeColor(self.mouse_pos)
+
+        self.barco2= Button(image= pygame.image.load("assets/images/barcos/barco2/barco2.png"), pos=(1100, 400), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
+        self.barco2.changeColor(self.mouse_pos)
+
+        self.barco3= Button(image= pygame.image.load("assets/images/barco3-side.png"), pos=(1100, 600), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
+        self.barco3.changeColor(self.mouse_pos)
 
     def create_tile_group(self, layout):
         
@@ -134,11 +140,21 @@ class Juego:
     def get_font(self, size):
         return pygame.font.Font("assets/fonts/sonic-1-hud-font.ttf", size)
 
+    def place_barco1(self):
+        print("barco1")
+    
+    def place_barco2(self):
+        print("barco2")
+    
+    def place_barco3(self):
+        print("barco3")
+
     def run(self):
         self.tablero_sprites.draw(self.pantalla)
         self.barco1.update(pantalla)
-
-
+        self.barco2.update(pantalla)
+        self.barco3.update(pantalla)
+        self.mouse_pos= pygame.mouse.get_pos()
 
 juego = Juego(pantalla)
 
@@ -148,6 +164,13 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if juego.barco1.checkForInput(juego.mouse_pos):
+                juego.place_barco1()
+            if juego.barco2.checkForInput(juego.mouse_pos):
+                juego.place_barco2()
+            if juego.barco3.checkForInput(juego.mouse_pos):
+                juego.place_barco3()
          
     pantalla.fill("#3333A4")
     juego.run()
