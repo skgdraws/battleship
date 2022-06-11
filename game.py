@@ -8,6 +8,37 @@ pantalla = pygame.display.set_mode((1280, 720))
 pygame.display.set_caption("Battleship")
 clock = pygame.time.Clock()
 
+class Button():
+
+	def __init__(self, image, pos, text_input, font, base_color, hovering_color):
+		self.image = image
+		self.x_pos = pos[0]
+		self.y_pos = pos[1]
+		self.font = font
+		self.base_color, self.hovering_color = base_color, hovering_color
+		self.text_input = text_input
+		self.text = self.font.render(self.text_input, True, self.base_color)
+		if self.image is None:
+			self.image = self.text
+		self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
+		self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
+
+	def update(self, screen):
+		if self.image is not None:
+			screen.blit(self.image, self.rect)
+		screen.blit(self.text, self.text_rect)
+
+	def checkForInput(self, position):
+		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
+			return True
+		return False
+
+	def changeColor(self, position):
+		if position[0] in range(self.rect.left, self.rect.right) and position[1] in range(self.rect.top, self.rect.bottom):
+			self.text = self.font.render(self.text_input, True, self.hovering_color)
+		else:
+			self.text = self.font.render(self.text_input, True, self.base_color)
+
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, size):
         super().__init__()          #initializes the Sprite module to be used later
@@ -66,8 +97,8 @@ class Juego:
         self.tablero_jugador = import_csv_layout(f"assets/data/save{self.save_game}/player1.csv")
         self.tablero_sprites = self.create_tile_group(self.tablero_jugador)
 
-
     def create_tile_group(self, layout):
+        
         sprite_group = pygame.sprite.Group()
 
         for row_index, row in enumerate(layout):
@@ -94,16 +125,20 @@ class Juego:
         return sprite_group
     
     dict= {"barco1":[0,0],"barco2":[0,2],"barco3":[0,3]}
-    
-    def place_boat(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
-            print ("hola")
+    def get_font(self, size):
+        return pygame.font.Font("assets/fonts/sonic-1-hud-font.ttf", size)
 
+    
+   
+    mouse_pos= pygame.mouse.get_pos()
+
+    self.barco1= Button(image= pygame.image.load("assets/images/barcos/barco1/barco1.png"), pos=(640, 400), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
+    self.barco1.changeColor(mouse_pos)
+    self.barco1.update(pantalla)
 
     def run(self):
-        self.tablero_jugador[1][1] = 1
         self.tablero_sprites.draw(self.pantalla)
+        self.barco1.update(pantalla)
 
 
 
@@ -115,6 +150,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        
     
     
 
