@@ -1,3 +1,4 @@
+from re import S
 import sys
 from support import *
 import pygame
@@ -60,6 +61,7 @@ class Juego:
         self.miss = pygame.mixer.Sound("assets/sound/sfx/miss.wav")
         self.miss.set_volume(0.5)
 
+
         #Maneja el Tablero
         tablero_jugador = import_csv_layout(f"assets/data/save{self.save_game}/player1.csv")
         self.tablero_sprites = self.create_tile_group(tablero_jugador)
@@ -80,14 +82,22 @@ class Juego:
 
                     sprite_group.add(sprite)
 
+                    
+                
         return sprite_group
     
-    #def place_boat():
-        #if event.type == pygame.MOUSEBUTTONDOWN:
-            #print ("hola")
+    dict= {"barco1":[0,0],"barco2":[0,2],"barco3":[0,3]}
+    
+    def place_boat(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            print ("hola")
 
+    
     def run(self):
         self.tablero_sprites.draw(self.pantalla)
+
+
 
 juego = Juego(pantalla)
 
@@ -97,11 +107,10 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-
     
-        
-            
+    
 
+        
     pantalla.fill("#3333A4")
     juego.run()
     pygame.display.update()
