@@ -1,3 +1,4 @@
+import random
 import tkinter as tk
 import pygame
 from PIL import ImageTk, Image
@@ -9,6 +10,15 @@ window.geometry("1280x720")
 window.title("Main Menu")
 window.resizable(False, False)
 
+#Efectos de Sonido
+select1 = pygame.mixer.Sound("assets/sound/sfx/select1.wav")
+select1.set_volume(0.5)
+select2 = pygame.mixer.Sound("assets/sound/sfx/select2.wav")
+select2.set_volume(0.5)
+select3 = pygame.mixer.Sound("assets/sound/sfx/select3.wav")
+select3.set_volume(0.5)
+select_sounds = [select1, select2, select3]
+
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     canvas.pack()
@@ -19,6 +29,7 @@ def main():
 
     #Boton seleccionar una partida
     def open_p():
+        select_sounds[random.randint(0,2)].play()
         canvas.destroy()
         canvas.quit
         play()
@@ -27,6 +38,7 @@ def main():
 
     #Boton para salon de la fama
     def open_hs():
+        select_sounds[random.randint(0,2)].play()
         canvas.destroy()
         canvas.quit
         highscore()
@@ -42,6 +54,7 @@ def main():
 
     #Boton para ayuda
     def open_h():
+        select_sounds[random.randint(0,2)].play()
         canvas.destroy()
         canvas.quit
         help()
@@ -56,6 +69,7 @@ def play():
     
     #Boton para cerrar selccion de partida
     def close_p():
+        select_sounds[random.randint(0,2)].play()
         p_canvas.destroy()
         p_canvas.quit
         main()
@@ -163,6 +177,7 @@ def highscore():
 
     #Boton para cerrar salon de la fama
     def close_hs():
+        select_sounds[random.randint(0,2)].play()
         hs_canvas.destroy()
         hs_canvas.quit
         main()
@@ -177,6 +192,7 @@ def help():
 
     #Boton para cerrar ayuda
     def close_help():
+        select_sounds[random.randint(0,2)].play()
         help_canvas.destroy()
         help_canvas.quit
         main()
