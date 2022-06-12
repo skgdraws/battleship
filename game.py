@@ -48,22 +48,6 @@ class Tile(pygame.sprite.Sprite):
         # self.image = pygame.image.load("images/tiles/ground1.png")
         self.rect = self.image.get_rect(topleft = pos)
 
-class AnimatedTile(Tile):
-    def __init__(self, pos, size, path):
-        super().__init__(pos, size)
-        self.frames = import_folder(path)
-        self.frameIndex = 0
-        self.animSpeed = 0.15
-        self.image = self.frames[self.frameIndex]
-
-    def animate(self):
-        self.frameIndex += self.animSpeed
-        
-        if self.frameIndex >= len(self.frames):
-            self.frameIndex = 0
-        
-        self.image = self.frames[int(self.frameIndex)]
-
 class StaticTile(Tile):
 
     def __init__(self, pos, size, surface):
@@ -93,10 +77,7 @@ class Juego:
         self.miss = pygame.mixer.Sound("assets/sound/sfx/miss.wav")
         self.miss.set_volume(0.5)
 
-
         #Maneja el Tablero
-        self.tablero_jugador = import_csv_layout(f"assets/data/save{self.save_game}/player1.csv")
-        self.tablero_sprites = self.create_tile_group(self.tablero_jugador)
 
         #Maneja los botones
         self.mouse_pos= pygame.mouse.get_pos()
@@ -109,36 +90,14 @@ class Juego:
         self.barco3= Button(image= pygame.image.load("assets/images/barco3-side.png"), pos=(1100, 600), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
         self.barco3.changeColor(self.mouse_pos)
 
-    def create_tile_group(self, layout):
-        
-        sprite_group = pygame.sprite.Group()
-
-        for row_index, row in enumerate(layout):
-            for col_index, val in enumerate(row):
-                
-                x = (col_index * 64) + 300
-                y = (row_index * 64) + 50
-                
-                if val == "0":
-                    surface_tile_list = import_cut_graphics('assets/images/tiles/ground1.png')
-                    tile_surface = surface_tile_list[int(val)]
-                    sprite = StaticTile((x,y), 64, tile_surface)
-
-                    sprite_group.add(sprite)
-                
-                if val == "1":
-                    tile_surface = pygame.image.load("assets/images/barcos/barco1/barco1.png").convert_alpha()
-                    sprite = AnimatedTile((x,y),64, "assets/images/barcos/barco1")
-
-                    sprite_group.add(sprite)
-    
-                    
-
-        return sprite_group
-    
-    dict= {"barco1":[0,0],"barco2":[0,2],"barco3":[0,3]}
     def get_font(self, size):
         return pygame.font.Font("assets/fonts/sonic-1-hud-font.ttf", size)
+
+    def create_tile_group(self, layout):
+        pass
+        
+    
+    dict= {"barco1":[0,0],"barco2":[0,2],"barco3":[0,3]}
 
     def place_barco1(self):
         print("barco1")
@@ -150,11 +109,11 @@ class Juego:
         print("barco3")
 
     def run(self):
-        self.tablero_sprites.draw(self.pantalla)
         self.barco1.update(pantalla)
         self.barco2.update(pantalla)
         self.barco3.update(pantalla)
         self.mouse_pos= pygame.mouse.get_pos()
+
 
 juego = Juego(pantalla)
 
@@ -164,11 +123,14 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             if juego.barco1.checkForInput(juego.mouse_pos):
                 juego.place_barco1()
+
             if juego.barco2.checkForInput(juego.mouse_pos):
                 juego.place_barco2()
+
             if juego.barco3.checkForInput(juego.mouse_pos):
                 juego.place_barco3()
          
@@ -176,4 +138,3 @@ while True:
     juego.run()
     pygame.display.update()
     clock.tick(60)
-

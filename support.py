@@ -15,14 +15,37 @@ def import_folder(path):
     
     return surface_list
 
-def import_csv_layout(path):
-    terrain_map = []
-    # Opening up the csv File
-    with open(path) as map:
-        level = reader(map, delimiter = ',')
-        for row in level:
-            terrain_map.append(list(row))
-        return terrain_map
+def read_lines(mat_x, mat_y, is_player, save):
+    
+    matrix_pos = open(f"data/save{save}/game.txt", 'r')
+    linea = matrix_pos.readlines()
+
+    if is_player:
+        matrix_pos_y = linea[mat_y + 1].split()
+        val = matrix_pos_y[mat_x]
+    
+    else:
+        matrix_pos_y = linea[mat_y + 11].split()
+        val = matrix_pos_y[mat_x]
+
+    matrix_pos.close()
+    return val
+
+def write_lines(mat_x, mat_y, is_player, save):
+    
+    matrix_pos = open(f"assets/data/save{save}/game.txt", 'r+')
+    lines = matrix_pos.readlines()
+
+    if is_player:
+        for i in range(1,12):
+            print(lines)
+
+    else:
+        for i in range(12,12):
+            print(lines)
+
+    matrix_pos.close()
+
 
 def import_scores(path):
     score_list = []
@@ -54,10 +77,11 @@ def import_cut_graphics(path):
     return cut_tiles
 
 def save_data(score, name):
-
-    file = open('data/scores.csv', "a", newline="")
+    file = open('assets/data/scores.csv', "a", newline="")
 
     data = (score, name)
     data_writer = writer(file)
     data_writer.writerow(data)
     file.close()
+
+write_lines(1, 1, True, 1)
