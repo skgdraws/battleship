@@ -1,3 +1,4 @@
+from email.headerregistry import Group
 from re import S
 import sys
 from support import *
@@ -6,8 +7,15 @@ import pygame
 pygame.init()
 
 pantalla= pygame.display.set_mode((1280, 720))
-pygame.display.set_caption("Menu")
+pygame.display.set_caption("Battleship!")
 clock = pygame.time.Clock()
+
+grid = []
+
+spr_blank = pygame.image.load("assets/images/barcos/barco1/barco1.png")
+spr_boat1 = pygame.image.load("assets/images/barcos/barco1/barco2.png")
+spr_boat2 = pygame.image.load("assets/images/barcos/barco2/barco3.png")
+# spr_boat3 = pygame.image.load("assets/images/barcos/barco3/barco1.png")
 
 class Button():
 
@@ -54,87 +62,91 @@ class StaticTile(Tile):
         super().__init__(pos, size)
         self.image = surface
 
-class Juego:
-    def __init__(self, pantalla):
-        
-        #Variables para la lógica del juego
-        self.turnos = 1
-        self.pantalla = pantalla
-        self.save_game = 1
+class Grid:
 
-        #Audio
-        self.rot_sound1 = pygame.mixer.Sound("assets/sound/sfx/rotate1.wav")
-        self.rot_sound1.set_volume(0.5)
-        self.rot_sound2 = pygame.mixer.Sound("assets/sound/sfx/rotate2.wav")
-        self.rot_sound2.set_volume(0.5)
-        self.rot_sounds = [self.rot_sound1, self.rot_sound2]
+	def __init__(self, xGrid, yGrid, type):
+		
+		self.xGrid = xGrid
+		self.yGrid = yGrid
+		self.clicked= False
+		self.isBoat1 = False
+		self.isBoat2 = False
+		self.isBoat3 = False
+		self.attacked = False
+		
+		self.rect = pygame.Rect(300 + self.xGrid * 64, 50 + self.xGrid * 64, 64, 64)
+		self.val = type
 
-        self.hit_sound = pygame.mixer.Sound("assets/sound/sfx/hit.wav")
-        self.hit_sound.set_volume(0.5)
-        self.hit_confirm = pygame.mixer.Sound("assets/sound/sfx/hitConfirm.wav")
-        self.hit_confirm.set_volume(0.5)
+	def draw_grid(self):
 
-        self.miss = pygame.mixer.Sound("assets/sound/sfx/miss.wav")
-        self.miss.set_volume(0.5)
+		if self.clicked:
 
-        #Maneja el Tablero
+			if self.val == 0:
+				if self.attacked:
+					pantalla.blit(spr_blank, self.rect)
+				else:
+					pantalla.blit(spr_blank, self.rect)
 
-        #Maneja los botones
-        self.mouse_pos= pygame.mouse.get_pos()
-        self.barco1= Button(image= pygame.image.load("assets/images/barcos/barco1/barco1.png"), pos=(1100, 200), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
-        self.barco1.changeColor(self.mouse_pos)
+			if self.val == 1:
+				pantalla.blit(spr_boat1, self.rect)
 
-        self.barco2= Button(image= pygame.image.load("assets/images/barcos/barco2/barco2.png"), pos=(1100, 400), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
-        self.barco2.changeColor(self.mouse_pos)
+			if self.val == 2:
+				pantalla.blit(spr_boat2, self.rect)
 
-        self.barco3= Button(image= pygame.image.load("assets/images/barco3-side.png"), pos=(1100, 600), text_input= "", font= self.get_font(70), base_color= "black", hovering_color= "#dfe0e8")
-        self.barco3.changeColor(self.mouse_pos)
+			# if self.val == 3:
+			# 	pantalla.blit(spr_boat3, self.rect)
 
-    def get_font(self, size):
-        return pygame.font.Font("assets/fonts/sonic-1-hud-font.ttf", size)
+		else:
+			pantalla.blit(spr_blank, self.rect)
 
-    def create_tile_group(self, layout):
-        pass
-        
-    
-    dict= {"barco1":[0,0],"barco2":[0,2],"barco3":[0,3]}
+	def update_value(self, value):
+		if self.val == 0:
 
-    def place_barco1(self):
-        print("barco1")
-    
-    def place_barco2(self):
-        print("barco2")
-    
-    def place_barco3(self):
-        print("barco3")
+			for x in range(0,4):
+				if self.xGrid + x >= 0 and self.xGrid + x < 10:
 
-    def run(self):
-        self.barco1.update(pantalla)
-        self.barco2.update(pantalla)
-        self.barco3.update(pantalla)
-        self.mouse_pos= pygame.mouse.get_pos()
+					for y in range(-1, 2):
 
+						if self.yGrid + y >= 0 and self.yGrid + y < 10:
 
-juego = Juego(pantalla)
+							if grid[self.yGrid + y][self.xGrid + x].val == -1:
+								self.val = value
 
-while True:
+def game(save):
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+	gameState = "Playing"
+	global grid
+	grid = []
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if juego.barco1.checkForInput(juego.mouse_pos):
-                juego.place_barco1()
+	for j in range(10):
+		line = []
+		for i in range(10):
+			line.append(Grid(i, j, 0))
+		
+		grid.append(line)
 
-            if juego.barco2.checkForInput(juego.mouse_pos):
-                juego.place_barco2()
+	while True:
+		
+		pantalla.fill("#3333A4")
+		
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				sys.exit()
+			
+			else:
+				if event.type == pygame.MOUSEBUTTONUP:
+					for i in grid:
+						for j in i:
+							if j.rect.collidepoint(event.pos):
+								if event.button == 1:
+									print("atacaste!")
+		for i in grid:
+			for j in i:
+				j.draw_grid()
 
-            if juego.barco3.checkForInput(juego.mouse_pos):
-                juego.place_barco3()
-         
-    pantalla.fill("#3333A4")
-    juego.run()
-    pygame.display.update()
-    clock.tick(60)
+		#grid.run()
+		pygame.display.update()
+		clock.tick(60)
+
+game(1)

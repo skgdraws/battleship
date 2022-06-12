@@ -38,11 +38,13 @@ def write_lines(mat_x, mat_y, is_player, save):
 
     if is_player:
         for i in range(1,12):
-            print(lines)
+            #print(lines)
+            pass
 
     else:
         for i in range(12,12):
-            print(lines)
+            #print(lines)
+            pass
 
     matrix_pos.close()
 
