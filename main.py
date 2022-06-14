@@ -1,4 +1,5 @@
 import random
+from re import I
 import tkinter as tk
 import pygame
 #from PIL import ImageTk, Image
@@ -43,6 +44,8 @@ enemy = [[0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0]]
+
+barco = "debug"
 
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
@@ -92,6 +95,10 @@ def game():
     g_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
     g_canvas.pack()
 
+    global barco
+    global player
+    global enemy
+
     #Selección de Barcos (Imágenes)
     #boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
     #g_canvas.create_image(1150, 50, anchor= tk.N, image=boat1)
@@ -112,9 +119,22 @@ def game():
     boat3_b= tk.Button(g_canvas, text= "BARCO 3", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF")
     boat3_b.place(x= 1100, y=550)
 
+    #Funciones para el tablero
+    def place_boat(i, j, barco):
+        if barco == 1:
+            player[j][i]= barco
+        elif barco == 2:
+            player[j][i]= barco
+            player [j][i+1]= barco
+        elif barco == 3:
+            player[j][i]= barco
+            player[j][i+1]= barco
+            player[j][1+2]= barco
+        print(player)
+
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-    a1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(0,0,barco))
     a2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
     a3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
     a4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
