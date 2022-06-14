@@ -3,6 +3,7 @@ import tkinter as tk
 import pygame
 from PIL import ImageTk, Image
 from support import *
+import pathlib
 
 pygame.init()
 window= tk.Tk()
@@ -67,7 +68,7 @@ def game():
     g_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
     g_canvas.pack()
 
-    boat1_b= tk.Button(g_canvas, image=("assets/images/barco1-side.png"), font= ("Sonic 1 HUD Font", 30), bg= "black", fg="white")
+    boat1_b= tk.Button(g_canvas, image= str(pathlib.Path().resolve()) + "\\assets\images\\barco1.png", font= ("Sonic 1 HUD Font", 30), bg= "black", fg="white")
     boat1_b.place(x= 100, y=100)
 
     g_canvas.mainloop()
