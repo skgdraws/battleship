@@ -7,7 +7,7 @@ from support import *
 pygame.init()
 window= tk.Tk()
 window.geometry("1280x720")
-window.title("Main Menu")
+window.title("Battleship!")
 window.resizable(False, False)
 
 #Efectos de Sonido
@@ -33,7 +33,7 @@ def main():
         canvas.destroy()
         canvas.quit
         play()
-    play_b= tk.Button(canvas, text= " Play ", font= ("Sonic 1 HUD Font", 30), bg= "black", fg="white", command= open_p)
+    play_b= tk.Button(canvas, text= " PLAY ", font= ("Sonic 1 HUD Font", 30), bg= "black", fg="white", command= open_p)
     play_b.place(x= 570, y= 300)
 
     #Boton para salon de la fama
@@ -42,14 +42,14 @@ def main():
         canvas.destroy()
         canvas.quit
         highscore()
-    hs_b= tk.Button(canvas, text= "HighScore", font= ("Sonic 1 HUD Font", 30), bg= "black", fg="white", command= open_hs)
+    hs_b= tk.Button(canvas, text= "HIGHSCORE", font= ("Sonic 1 HUD Font", 30), bg= "black", fg="white", command= open_hs)
     hs_b.place(x= 534, y= 450)
 
     #Boton para cerrar el juego
     def quit():
         window.destroy()
         window.quit
-    quit_b= tk.Button(canvas, text= " Quit ", font= ("Sonic 1 HUD Font", 30), bg= "black", fg="white", command= quit)
+    quit_b= tk.Button(canvas, text= " QUIT ", font= ("Sonic 1 HUD Font", 30), bg= "black", fg="white", command= quit)
     quit_b.place(x= 570, y= 600)
 
     #Boton para ayuda
@@ -63,6 +63,13 @@ def main():
 
     window.mainloop()
 
+def game():
+    g_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
+    g_canvas.pack()
+
+    g_canvas.mainloop()
+
+
 def play():
     p_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     p_canvas.pack()
@@ -73,17 +80,35 @@ def play():
         p_canvas.destroy()
         p_canvas.quit
         main()
+    
+    def open_file1():
+        select_sounds[random.randint(0,2)].play()
+        p_canvas.destroy()
+        p_canvas.quit
+        game()
+    
+    def open_file2():
+        select_sounds[random.randint(0,2)].play()
+        p_canvas.destroy()
+        p_canvas.quit
+        game()
+    
+    def open_file3():
+        select_sounds[random.randint(0,2)].play()
+        p_canvas.destroy()
+        p_canvas.quit
+        game()
 
     closep_b= tk.Button(p_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_p)
     closep_b.place(x= 50, y= 50)
 
-    fileb_1= tk.Button(p_canvas, text= " File 1 ", font= ("Sonic 1 HUD Font", 60), bg= "black", fg="white")
+    fileb_1= tk.Button(p_canvas, text= " File 1 ", font= ("Sonic 1 HUD Font", 60), bg= "black", fg="white", command= open_file1)
     fileb_1.place(x= 464, y= 100)
 
-    fileb_2= tk.Button(p_canvas, text= " File 2 ", font= ("Sonic 1 HUD Font", 60), bg= "black", fg="white")
+    fileb_2= tk.Button(p_canvas, text= " File 2 ", font= ("Sonic 1 HUD Font", 60), bg= "black", fg="white", command= open_file2)
     fileb_2.place(x= 464, y= 300)
 
-    fileb_3= tk.Button(p_canvas, text= " File 3 ", font= ("Sonic 1 HUD Font", 60), bg= "black", fg="white")
+    fileb_3= tk.Button(p_canvas, text= " File 3 ", font= ("Sonic 1 HUD Font", 60), bg= "black", fg="white", command= open_file3)
     fileb_3.place(x= 464, y= 500)
 
     p_canvas.mainloop()
