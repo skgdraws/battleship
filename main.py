@@ -69,15 +69,15 @@ def game():
     g_canvas.pack()
 
     boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
-    g_canvas.create_image(1150, 100, anchor= tk.NW, image=boat1)
+    g_canvas.create_image(600, 100, anchor= tk.NW, image=boat1)
 
-    boat1_b= tk.Button(g_canvas, text= "BARCO 1", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white")
+    boat1_b= tk.Button(g_canvas, text= "BARCO 1", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF")
     boat1_b.place(x= 1100, y=150)
 
-    boat2_b= tk.Button(g_canvas, text= "BARCO 2", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white")
+    boat2_b= tk.Button(g_canvas, text= "BARCO 2", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF")
     boat2_b.place(x= 1100, y=350)
 
-    boat3_b= tk.Button(g_canvas, text= "BARCO 3", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white")
+    boat3_b= tk.Button(g_canvas, text= "BARCO 3", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF")
     boat3_b.place(x= 1100, y=550)
 
     g_canvas.mainloop()
