@@ -1,7 +1,7 @@
 import random
 import tkinter as tk
 import pygame
-from PIL import ImageTk, Image
+#from PIL import ImageTk, Image
 from support import *
 import pathlib
 
@@ -25,8 +25,8 @@ def main():
     canvas.pack()
 
     #Titulo
-    title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
-    canvas.create_image(240, 65, anchor= tk.NW, image=title)
+    #title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
+    #canvas.create_image(240, 65, anchor= tk.NW, image=title)
 
     #Boton seleccionar una partida
     def open_p():
@@ -68,15 +68,17 @@ def game():
     g_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
     g_canvas.pack()
 
-    boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
-    g_canvas.create_image(1150, 50, anchor= tk.N, image=boat1)
+    #Selección de Barcos (Imágenes)
+    #boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
+    #g_canvas.create_image(1150, 50, anchor= tk.N, image=boat1)
 
-    boat2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
-    g_canvas.create_image(1150, 250, anchor= tk.N, image=boat2)
+    #boat2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
+    #g_canvas.create_image(1150, 250, anchor= tk.N, image=boat2)
 
-    boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
-    g_canvas.create_image(1085, 450, anchor= tk.NW, image=boat3)
+    #boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
+    #g_canvas.create_image(1085, 450, anchor= tk.NW, image=boat3)
 
+    #Selección de Barcos (Botones)
     boat1_b= tk.Button(g_canvas, text= "BARCO 1", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF")
     boat1_b.place(x= 1100, y=150)
 
@@ -85,6 +87,270 @@ def game():
 
     boat3_b= tk.Button(g_canvas, text= "BARCO 3", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF")
     boat3_b.place(x= 1100, y=550)
+
+    #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+    a1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    a10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    a1.place(x=250 + 100 , y= 100)
+    a2.place(x=250 + 150 , y= 100)
+    a3.place(x=250 + 200 , y= 100)
+    a4.place(x=250 + 250 , y= 100)
+    a5.place(x=250 + 300 , y= 100)
+    a6.place(x=250 + 350 , y= 100)
+    a7.place(x=250 + 400 , y= 100)
+    a8.place(x=250 + 450 , y= 100)
+    a9.place(x=250 + 500 , y= 100)
+    a10.place(x=250 + 550 , y= 100)
+
+    #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+    b1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    b2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    b3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    b4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    b5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    b6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    b7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    b8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    b9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    b10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    b1.place(x=250 + 100 , y= 150)
+    b2.place(x=250 + 150 , y= 150)
+    b3.place(x=250 + 200 , y= 150)
+    b4.place(x=250 + 250 , y= 150)
+    b5.place(x=250 + 300 , y= 150)
+    b6.place(x=250 + 350 , y= 150)
+    b7.place(x=250 + 400 , y= 150)
+    b8.place(x=250 + 450 , y= 150)
+    b9.place(x=250 + 500 , y= 150)
+    b10.place(x=250 + 550 , y= 150)
+    
+    #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+    c1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    c2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    c3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    c4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    c5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    c6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    c7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    c8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    c9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    c10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    c1.place(x=250 + 100 , y= 150)
+    c2.place(x=250 + 150 , y= 150)
+    c3.place(x=250 + 200 , y= 150)
+    c4.place(x=250 + 250 , y= 150)
+    c5.place(x=250 + 300 , y= 150)
+    c6.place(x=250 + 350 , y= 150)
+    c7.place(x=250 + 400 , y= 150)
+    c8.place(x=250 + 450 , y= 150)
+    c9.place(x=250 + 500 , y= 150)
+    c10.place(x=250 + 550 , y= 150)
+
+    #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+    d1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    d2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    d3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    d4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    d5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    d6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    d7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    d8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    d9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    d10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    d1.place(x=250 + 100 , y= 200)
+    d2.place(x=250 + 150 , y= 200)
+    d3.place(x=250 + 200 , y= 200)
+    d4.place(x=250 + 250 , y= 200)
+    d5.place(x=250 + 300 , y= 200)
+    d6.place(x=250 + 350 , y= 200)
+    d7.place(x=250 + 400 , y= 200)
+    d8.place(x=250 + 450 , y= 200)
+    d9.place(x=250 + 500 , y= 200)
+    d10.place(x=250 + 550 , y= 200)
+
+    #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+    e1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    e2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    e3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    e4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    e5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    e6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    e7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    e8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    e9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    e10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    e1.place(x=250 + 100 , y= 250)
+    e2.place(x=250 + 150 , y= 250)
+    e3.place(x=250 + 200 , y= 250)
+    e4.place(x=250 + 250 , y= 250)
+    e5.place(x=250 + 300 , y= 250)
+    e6.place(x=250 + 350 , y= 250)
+    e7.place(x=250 + 400 , y= 250)
+    e8.place(x=250 + 450 , y= 250)
+    e9.place(x=250 + 500 , y= 250)
+    e10.place(x=250 + 550 , y= 250)
+
+    #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+    f1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    f2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    f3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    f4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    f5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    f6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    f7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    f8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    f9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    f10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    f1.place(x=250 + 100 , y= 300)
+    f2.place(x=250 + 150 , y= 300)
+    f3.place(x=250 + 200 , y= 300)
+    f4.place(x=250 + 250 , y= 300)
+    f5.place(x=250 + 300 , y= 300)
+    f6.place(x=250 + 350 , y= 300)
+    f7.place(x=250 + 400 , y= 300)
+    f8.place(x=250 + 450 , y= 300)
+    f9.place(x=250 + 500 , y= 300)
+    f10.place(x=250 + 550 , y= 300)
+    
+    #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+    g1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    g2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    g3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    g4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    g5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    g6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    g7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    g8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    g9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    g10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    g1.place(x=250 + 100 , y= 350)
+    g2.place(x=250 + 150 , y= 350)
+    g3.place(x=250 + 200 , y= 350)
+    g4.place(x=250 + 250 , y= 350)
+    g5.place(x=250 + 300 , y= 350)
+    g6.place(x=250 + 350 , y= 350)
+    g7.place(x=250 + 400 , y= 350)
+    g8.place(x=250 + 450 , y= 350)
+    g9.place(x=250 + 500 , y= 350)
+    g10.place(x=250 + 550 , y= 350)
+
+    #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+    h1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    h2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    h3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    h4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    h5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    h6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    h7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    h8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    h9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    h10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    h1.place(x=250 + 100 , y= 400)
+    h2.place(x=250 + 150 , y= 400)
+    h3.place(x=250 + 200 , y= 400)
+    h4.place(x=250 + 250 , y= 400)
+    h5.place(x=250 + 300 , y= 400)
+    h6.place(x=250 + 350 , y= 400)
+    h7.place(x=250 + 400 , y= 400)
+    h8.place(x=250 + 450 , y= 400)
+    h9.place(x=250 + 500 , y= 400)
+    h10.place(x=250 + 550 , y= 400)
+
+    #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+    i1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    i2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    i3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    i4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    i5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    i6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    i7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    i8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    i9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    i10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    i1.place(x=250 + 100 , y= 450)
+    i2.place(x=250 + 150 , y= 450)
+    i3.place(x=250 + 200 , y= 450)
+    i4.place(x=250 + 250 , y= 450)
+    i5.place(x=250 + 300 , y= 450)
+    i6.place(x=250 + 350 , y= 450)
+    i7.place(x=250 + 400 , y= 450)
+    i8.place(x=250 + 450 , y= 450)
+    i9.place(x=250 + 500 , y= 450)
+    i10.place(x=250 + 550 , y= 450)
+    
+    #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+    j1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    j2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    j3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    j4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    j5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    j6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    j7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    j8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    j9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    j10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    j1.place(x=250 + 100 , y= 500)
+    j2.place(x=250 + 150 , y= 500)
+    j3.place(x=250 + 200 , y= 500)
+    j4.place(x=250 + 250 , y= 500)
+    j5.place(x=250 + 300 , y= 500)
+    j6.place(x=250 + 350 , y= 500)
+    j7.place(x=250 + 400 , y= 500)
+    j8.place(x=250 + 450 , y= 500)
+    j9.place(x=250 + 500 , y= 500)
+    j10.place(x=250 + 550 , y= 500)
+
+    #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+    k1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    k2 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    k3 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    k4 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    k5 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    k6 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    k7 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    k8 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    k9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+    k10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF")
+
+    k1.place(x=250 + 100 , y= 550)
+    k2.place(x=250 + 150 , y= 550)
+    k3.place(x=250 + 200 , y= 550)
+    k4.place(x=250 + 250 , y= 550)
+    k5.place(x=250 + 300 , y= 550)
+    k6.place(x=250 + 350 , y= 550)
+    k7.place(x=250 + 400 , y= 550)
+    k8.place(x=250 + 450 , y= 550)
+    k9.place(x=250 + 500 , y= 550)
+    k10.place(x=250 + 550 , y= 550)
 
     g_canvas.mainloop()
 
@@ -243,8 +509,8 @@ def help():
     close_help_b= tk.Button(help_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_help)
     close_help_b.place(x= 50, y= 40)
 
-    ship1= ImageTk.PhotoImage(Image.open('assets/images/barco3-side.png'))
-    help_canvas.create_image(100, 650, anchor= tk.NW, image=ship1)
+    #ship1= ImageTk.PhotoImage(Image.open('assets/images/barco3-side.png'))
+    #help_canvas.create_image(100, 650, anchor= tk.NW, image=ship1)
 
     title1= tk.Label(help_canvas, text= "Hola! Bienvenido a Battleship", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title1.place(x= 50, y=110)
