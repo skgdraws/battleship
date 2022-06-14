@@ -67,6 +67,9 @@ def game():
     g_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
     g_canvas.pack()
 
+    boat1_b= tk.Button(g_canvas, image=("assets/images/barco1-side.png"), font= ("Sonic 1 HUD Font", 30), bg= "black", fg="white")
+    boat1_b.place(x= 100, y=100)
+
     g_canvas.mainloop()
 
 
