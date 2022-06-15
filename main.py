@@ -755,24 +755,32 @@ def highscore():
             return
         
         else:
-            if lista[4][0] != '':
+            if lista[-5][0] != '':
+                score5.config(text= '5th. ' + lista[-5][1] + ' - ' + lista[-5][0] + ' turnos')
+            else:
+                score4.config(text= '5th. Nadie')
 
-                score5.config(text= '5th. ' + lista[0][0] + ' turnos - ' + lista[0][1])
+            if lista[-4][0] != '':
+                score4.config(text= '4th. ' + lista[-4][1] + ' - ' + lista[-4][0] + ' turnos')
+            else:
+                score4.config(text= '4th. Nadie')
 
-            if lista[3][0] != '':
+            if lista[-3][0] != '':
 
-                score4.config(text= '4th. ' + lista[1][0] + ' turnos - ' + lista[1][1])
-            if lista[2][0] != '':
+                score3.config(text= '3rd. ' + lista[-3][1] + ' - ' + lista[-3][0] + ' turnos') 
+            else:
+                score3.config(text= '3rd. Nadie')
 
-                score3.config(text= '3rd. ' + lista[2][0] + ' turnos - ' + lista[2][1])
+            if lista[-2][0] != '':
+                score2.config(text= '2nd. ' + lista[-2][1] + ' - ' + lista[-2][0] + ' turnos')
+            else:
+                score1.config(text= '2nd. Nadie')
 
-            if lista[1][0] != '':
+            if lista[-1][0] != '':
+                score1.config(text= '1st. ' + lista[-1][1] + ' - ' + lista[-1][0] + ' turnos')     
+            else:
+                score1.config(text= '1st. Nadie')
 
-                score2.config(text= '2nd. ' + lista[3][0] + ' turnos - ' + lista[3][1])
-
-            if lista[0][0] != '':
-
-                score1.config(text= '1st. ' + lista[4][0] + ' turnos - ' + lista[4][1])
 
     scores = organize_score_list()
     set_scores(scores)
