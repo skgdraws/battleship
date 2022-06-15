@@ -56,6 +56,14 @@ boat1_pos = ""
 boat2_pos = ""
 boat3_pos = ""
 
+curEnemy1 = 1
+curEnemy2 = 2
+curEnemy3 = 3
+
+curPlayer1 = 1
+curPlayer2 = 2
+curPlayer3 = 3
+
 title_theme.play(-1)
 
 def main():
@@ -515,13 +523,58 @@ def attack():
     window.title('Attacking')
     a_canvas.pack()
 
-    def attack_boat(i, j):
+    hit_sound = pygame.mixer.Sound('assets/sound/sfx/hit.wav')
+    hit_sound.set_volume(0.35)
+    hit_confirm_sound = pygame.mixer.Sound('assets/sound/sfx/hitConfirm.wav')
+    hit_confirm_sound.set_volume(0.35)
+    miss_sound = pygame.mixer.Sound("assets/sound/sfx/miss.wav")
+    miss_sound.set_volume(0.35)
+
+    def attack_boat(i, j, button):
         global player
+        global curEnemy1
+        global curEnemy2
+        global curEnemy3
         print(f"[{i},{j}]")
-        if enemy[j][i] == 1 or enemy[j][i] == 2 or enemy[j][i] == 3:
+
+        if enemy[j][i] == 1:
+            curEnemy1 -= 1
+            hit_confirm_sound.play()
+            button.config(bg = 'red')
             print('hit')
+
+        elif enemy[j][i] == 2:
+            button.config(bg = 'red')
+            curEnemy2 -= 1
+
+            if curEnemy1 == 0:
+                hit_confirm_sound.play()
+            else:
+                hit_sound.play()
+            print('hit')
+
+        elif enemy[j][i] == 3:
+            curEnemy3 -= 1
+
+            if curEnemy1 == 0:
+                hit_confirm_sound.play()
+            else:
+                hit_sound.play()
+            button.config(bg = 'red')
+            print('hit')
+
         else:
+            miss_sound.play()
+            button.config(bg = 'white')
             print('miss')
+
+        if curEnemy1 == 0 and curEnemy2 == 0 and curEnemy3 == 0:
+            print('ganaste!')
+            a_canvas.destroy()
+            a_canvas.quit
+            battle_theme.stop()
+            title_theme.play()
+            main()
     
     pos_boat1_label = tk.Label(text= boat1_pos, font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
     pos_boat1_label.place(x= 200, y= 350 + 15)
@@ -540,16 +593,16 @@ def attack():
 
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-    a1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,0))
-    a2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,0))
-    a3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,0))
-    a4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,0))
-    a5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,0))
-    a6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,0))
-    a7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,0))
-    a8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,0))
-    a9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,0))
-    a10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,0))
+    a1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,0,a1))
+    a2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,0,a2))
+    a3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,0,a3))
+    a4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,0,a4))
+    a5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,0,a5))
+    a6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,0,a6))
+    a7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,0,a7))
+    a8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,0,a8))
+    a9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,0,a9))
+    a10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,0,a10))
 
     a1.place(x=300 + 100 , y= 100)
     a2.place(x=300 + 150 , y= 100)
@@ -564,16 +617,16 @@ def attack():
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-    b1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,1))
-    b2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,1))
-    b3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,1))
-    b4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,1))
-    b5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,1))
-    b6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,1))
-    b7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,1))
-    b8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,1))
-    b9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,1))
-    b10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,1))
+    b1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,1,b1))
+    b2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,1,b2))
+    b3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,1,b3))
+    b4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,1,b4))
+    b5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,1,b5))
+    b6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,1,b6))
+    b7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,1,b7))
+    b8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,1,b8))
+    b9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,1,b9))
+    b10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,1,b10))
 
     b1.place(x=300 + 100 , y= 150)
     b2.place(x=300 + 150 , y= 150)
@@ -588,16 +641,16 @@ def attack():
     
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-    c1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,2))
-    c2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,2))
-    c3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,2))
-    c4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,2))
-    c5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,2))
-    c6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,2))
-    c7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,2))
-    c8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,2))
-    c9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,2))
-    c10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,2))
+    c1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,2, c1))
+    c2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,2, c2))
+    c3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,2, c3))
+    c4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,2, c4))
+    c5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,2, c5))
+    c6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,2, c6))
+    c7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,2, c7))
+    c8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,2, c8))
+    c9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,2, c9))
+    c10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,2, c10))
 
     c1.place(x=300 + 100 , y= 200)
     c2.place(x=300 + 150 , y= 200)
@@ -612,16 +665,16 @@ def attack():
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-    d1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,3))
-    d2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,3))
-    d3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,3))
-    d4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,3))
-    d5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,3))
-    d6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,3))
-    d7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,3))
-    d8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,3))
-    d9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,3))
-    d10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,3))
+    d1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,3, d1))
+    d2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,3, d2))
+    d3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,3, d3))
+    d4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,3, d4))
+    d5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,3, d5))
+    d6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,3, d6))
+    d7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,3, d7))
+    d8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,3, d8))
+    d9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,3, d9))
+    d10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,3, d10))
 
     d1.place(x=300 + 100 , y= 250)
     d2.place(x=300 + 150 , y= 250)
@@ -636,16 +689,16 @@ def attack():
 
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-    e1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,4))
-    e2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,4))
-    e3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,4))
-    e4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,4))
-    e5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,4))
-    e6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,4))
-    e7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,4))
-    e8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,4))
-    e9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,4))
-    e10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,4))
+    e1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,4,e1))
+    e2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,4,e2))
+    e3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,4,e3))
+    e4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,4,e4))
+    e5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,4,e5))
+    e6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,4,e6))
+    e7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,4,e7))
+    e8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,4,e8))
+    e9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,4,e9))
+    e10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,4,e10))
 
     e1.place(x=300 + 100 , y= 300)
     e2.place(x=300 + 150 , y= 300)
@@ -660,16 +713,16 @@ def attack():
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-    f1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,5))
-    f2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,5))
-    f3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,5))
-    f4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,5))
-    f5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,5))
-    f6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,5))
-    f7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,5))
-    f8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,5))
-    f9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,5))
-    f10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,5))
+    f1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,5,f1))
+    f2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,5,f2))
+    f3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,5,f3))
+    f4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,5,f4))
+    f5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,5,f5))
+    f6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,5,f6))
+    f7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,5,f7))
+    f8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,5,f8))
+    f9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,5,f9))
+    f10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,5,f10))
 
     f1.place(x=300 + 100 , y= 350)
     f2.place(x=300 + 150 , y= 350)
@@ -684,16 +737,16 @@ def attack():
     
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-    g1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,6))
-    g2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,6))
-    g3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,6))
-    g4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,6))
-    g5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,6))
-    g6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,6))
-    g7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,6))
-    g8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,6))
-    g9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,6))
-    g10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,6))
+    g1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,6,g1))
+    g2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,6,g2))
+    g3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,6,g3))
+    g4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,6,g4))
+    g5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,6,g5))
+    g6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,6,g6))
+    g7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,6,g7))
+    g8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,6,g8))
+    g9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,6,g9))
+    g10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,6,g10))
 
     g1.place(x=300 + 100 , y= 400)
     g2.place(x=300 + 150 , y= 400)
@@ -708,16 +761,16 @@ def attack():
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-    h1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,7))
-    h2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,7))
-    h3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,7))
-    h4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,7))
-    h5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,7))
-    h6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,7))
-    h7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,7))
-    h8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,7))
-    h9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,7))
-    h10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,7))
+    h1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,7,h1))
+    h2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,7,h2))
+    h3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,7,h3))
+    h4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,7,h4))
+    h5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,7,h5))
+    h6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,7,h6))
+    h7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,7,h7))
+    h8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,7,h8))
+    h9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,7,h9))
+    h10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,7,h10))
 
     h1.place(x=300 + 100 , y= 450)
     h2.place(x=300 + 150 , y= 450)
@@ -732,16 +785,16 @@ def attack():
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-    i1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,8))
-    i2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,8))
-    i3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,8))
-    i4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,8))
-    i5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,8))
-    i6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,8))
-    i7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,8))
-    i8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,8))
-    i9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,8))
-    i10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,8))
+    i1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,8, i1))
+    i2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,8, i2))
+    i3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,8, i3))
+    i4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,8, i4))
+    i5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,8, i5))
+    i6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,8, i6))
+    i7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,8, i7))
+    i8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,8, i8))
+    i9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,8, i9))
+    i10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,8, i10))
 
     i1.place(x=300 + 100 , y= 500)
     i2.place(x=300 + 150 , y= 500)
@@ -753,18 +806,19 @@ def attack():
     i8.place(x=300 + 450 , y= 500)
     i9.place(x=300 + 500 , y= 500)
     i10.place(x=300 + 550 , y= 500)
+
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
-    j1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    j2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,9))
-    j3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,9))
-    j4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,9))
-    j5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,9))
-    j6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,9))
-    j7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,9))
-    j8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,9))
-    j9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,9))
-    j10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,9))
+    j1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9, j1))
+    j2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,9, j2))
+    j3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,9, j3))
+    j4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,9, j4))
+    j5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,9, j5))
+    j6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,9, j6))
+    j7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,9, j7))
+    j8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,9, j8))
+    j9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,9, j9))
+    j10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,9, j10))
 
     j1.place(x=300 + 100 , y= 550)
     j2.place(x=300 + 150 , y= 550)
