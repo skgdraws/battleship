@@ -1,11 +1,8 @@
-from calendar import c
 import random
-from re import I
 import tkinter as tk
 import pygame
-#from PIL import ImageTk, Image
+from PIL import ImageTk, Image
 from support import *
-import pathlib
 
 pygame.init()
 window= tk.Tk()
@@ -15,12 +12,18 @@ window.resizable(False, False)
 
 #Efectos de Sonido
 select1 = pygame.mixer.Sound("assets/sound/sfx/select1.wav")
-select1.set_volume(0.5)
+select1.set_volume(0.35)
 select2 = pygame.mixer.Sound("assets/sound/sfx/select2.wav")
-select2.set_volume(0.5)
+select2.set_volume(0.35)
 select3 = pygame.mixer.Sound("assets/sound/sfx/select3.wav")
-select3.set_volume(0.5)
+select3.set_volume(0.35)
 select_sounds = [select1, select2, select3]
+
+title_theme = pygame.mixer.Sound("assets/sound/music/title-theme.mp3")
+title_theme.set_volume(0.35)
+
+battle_theme = pygame.mixer.Sound("assets/sound/music/declare-war.mp3")
+battle_theme.set_volume(0.35)
 
 player = [[0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0],
@@ -45,14 +48,16 @@ enemy = [[0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0]]
 
 barco = 0
+title_theme.play(-1)
 
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     canvas.pack()
 
+
     #Titulo
-    #title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
-    #canvas.create_image(240, 65, anchor= tk.NW, image=title)
+    title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
+    canvas.create_image(240, 65, anchor= tk.NW, image=title)
 
     #Boton seleccionar una partida
     def open_p():
@@ -99,14 +104,14 @@ def game():
     global enemy
 
     #Selección de Barcos (Imágenes)
-    #boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
-    #g_canvas.create_image(1150, 50, anchor= tk.N, image=boat1)
+    boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
+    g_canvas.create_image(1150, 50, anchor= tk.N, image=boat1)
 
-    #boat2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
-    #g_canvas.create_image(1150, 250, anchor= tk.N, image=boat2)
+    boat2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
+    g_canvas.create_image(1150, 250, anchor= tk.N, image=boat2)
 
-    #boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
-    #g_canvas.create_image(1085, 450, anchor= tk.NW, image=boat3)
+    boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
+    g_canvas.create_image(1085, 450, anchor= tk.NW, image=boat3)
 
     #Selección de Barcos (Botones)
     boat1_b= tk.Button(g_canvas, text= "BARCO 1", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF", command= lambda: select_boat(1))
@@ -119,6 +124,8 @@ def game():
     boat3_b.place(x= 1100, y=550)
 
     def open_a():
+        title_theme.stop()
+        battle_theme.play(-1)
         g_canvas.destroy()
         g_canvas.quit
         attack()
@@ -138,7 +145,7 @@ def game():
         elif barco == 3:
             player[j][i]= barco
             player[j][i+1]= barco
-            player[j][1+2]= barco
+            player[j][i+2]= barco
             print(f'barco fue puesto en {i},{j}')
         print (player)
         
@@ -747,24 +754,32 @@ def highscore():
             return
         
         else:
-            if lista[4][0] != '':
+            if lista[-5][0] != '':
+                score5.config(text= '5th. ' + lista[-5][1] + ' - ' + lista[-5][0] + ' turnos')
+            else:
+                score4.config(text= '5th. Nadie')
 
-                score5.config(text= '5th. ' + lista[0][0] + ' turnos - ' + lista[0][1])
+            if lista[-4][0] != '':
+                score4.config(text= '4th. ' + lista[-4][1] + ' - ' + lista[-4][0] + ' turnos')
+            else:
+                score4.config(text= '4th. Nadie')
 
-            if lista[3][0] != '':
+            if lista[-3][0] != '':
 
-                score4.config(text= '4th. ' + lista[1][0] + ' turnos - ' + lista[1][1])
-            if lista[2][0] != '':
+                score3.config(text= '3rd. ' + lista[-3][1] + ' - ' + lista[-3][0] + ' turnos') 
+            else:
+                score3.config(text= '3rd. Nadie')
 
-                score3.config(text= '3rd. ' + lista[2][0] + ' turnos - ' + lista[2][1])
+            if lista[-2][0] != '':
+                score2.config(text= '2nd. ' + lista[-2][1] + ' - ' + lista[-2][0] + ' turnos')
+            else:
+                score1.config(text= '2nd. Nadie')
 
-            if lista[1][0] != '':
+            if lista[-1][0] != '':
+                score1.config(text= '1st. ' + lista[-1][1] + ' - ' + lista[-1][0] + ' turnos')     
+            else:
+                score1.config(text= '1st. Nadie')
 
-                score2.config(text= '2nd. ' + lista[3][0] + ' turnos - ' + lista[3][1])
-
-            if lista[0][0] != '':
-
-                score1.config(text= '1st. ' + lista[4][0] + ' turnos - ' + lista[4][1])
 
     scores = organize_score_list()
     set_scores(scores)
@@ -793,8 +808,8 @@ def help():
     close_help_b= tk.Button(help_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_help)
     close_help_b.place(x= 50, y= 40)
 
-    #ship1= ImageTk.PhotoImage(Image.open('assets/images/barco3-side.png'))
-    #help_canvas.create_image(100, 650, anchor= tk.NW, image=ship1)
+    ship1= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
+    help_canvas.create_image(100, 650, anchor= tk.NW, image=ship1)
 
     title1= tk.Label(help_canvas, text= "Hola! Bienvenido a Battleship", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title1.place(x= 50, y=110)
