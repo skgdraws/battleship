@@ -828,4 +828,4 @@ def help():
 
     help_canvas.mainloop()
 
-game()
+main()
