@@ -229,42 +229,45 @@ def game():
         i = random.randint(0,9)
         j = random.randint(0,9)
 
-        if boat == 1:
-            enemy[i][j] = boat
+        if boat == 1 and enemy[j][i] == 0:
+            enemy[j][i] = boat
             print(f"[{i},{j}]")
             
-        if boat == 2:
+        elif boat == 2 and enemy[j][i] == 0:
             try:
-                player[j][i]= barco
-                player [j][i+1]= barco
+                enemy[j][i]= boat
+                enemy[j][i+1]= boat
                 print(f"[{i},{j}], [{i+1},{j}]")
 
             except IndexError:
-                player[j][i]= barco
-                player [j][i-1]= barco
+                enemy[j][i]= boat
+                enemy[j][i-1]= boat
                 print(f"[{i},{j}], [{i-1},{j}]")
 
-        if boat == 3:
-            enemy[j][i]= barco
+        elif boat == 3 and enemy[j][i] == 0:
+            enemy[j][i]= boat
             try:
-                enemy[j][i+1]= barco
-                enemy[j][i+2]= barco
+                enemy[j][i+1]= boat
+                enemy[j][i+2]= boat
                 print(f"[{i},{j}], [{i+1},{j}], [{i+2},{j}]")
 
             except IndexError:
-                enemy[j][i-1]= barco
+                enemy[j][i-1]= boat
                 try:
-                    enemy[j][i+1]= barco
+                    enemy[j][i+1]= boat
                     print(f"[{i},{j}], [{i+1},{j}], [{i-1},{j}]")
 
                 except IndexError:
-                    enemy[j][i-1]= barco
-                    enemy[j][i-2]= barco
+                    enemy[j][i-1]= boat
+                    enemy[j][i-2]= boat
                     print(f"[{i},{j}], [{i-1},{j}], [{i-2},{j}]")
+        else:
+            enemy_boats(boat)
 
     enemy_boats(1)
     enemy_boats(2)
     enemy_boats(3)
+    print("enemy:",enemy)
 
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
@@ -514,7 +517,8 @@ def attack():
 
     def attack_boat(i, j):
         global player
-        if enemy [j][i] == 1 or enemy [j][i] == 2 or enemy [j][i] == 3:
+        print(f"[{i},{j}]")
+        if enemy[j][i] == 1 or enemy[j][i] == 2 or enemy[j][i] == 3:
             print('hit')
         else:
             print('miss')
