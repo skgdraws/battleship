@@ -529,6 +529,16 @@ def attack():
     hit_confirm_sound.set_volume(0.35)
     miss_sound = pygame.mixer.Sound("assets/sound/sfx/miss.wav")
     miss_sound.set_volume(0.35)
+
+    player_status= tk.Label(text= "Player Status", font=("Sonic 1 HUD Font", 20), bg= "blue", fg= "#CDDEFF")
+    player_status.place(x= 1000, y= 150)
+    player_info= tk.Label(text= "None", font=("Sonic 1 HUD Font", 20), bg= "blue", fg= "#CDDEFF")
+    player_info.place(x= 1050, y= 200)
+
+    enemy_status= tk.Label(text= "Enemy Status", font=("Sonic 1 HUD Font", 20), bg= "blue", fg= "#CDDEFF")
+    enemy_status.place(x= 1000, y= 400)
+    enemy_info= tk.Label(text= "None", font=("Sonic 1 HUD Font", 20), bg= "blue", fg= "#CDDEFF")
+    enemy_info.place(x= 1050, y= 450)
     
     pos_boat1_label = tk.Label(text= boat1_pos, font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
     pos_boat1_label.place(x= 200, y= 350 + 15)
@@ -545,6 +555,42 @@ def attack():
     pos_boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
     a_canvas.create_image(100, 490, anchor= tk.N, image=pos_boat3)
 
+    def enemy_attack():
+        global curPlayer1
+        global curPlayer2
+        global curPlayer3
+
+        i = random.randint(0,9)
+        j = random.randint(0,9)
+
+        if player [j][i] == 1:
+            curPlayer1 -= 1
+            hit_confirm_sound.play()
+            enemy_info.config(text= "HIT")
+        
+        elif player [j][i] == 2:
+            curPlayer2 -= 1
+
+            if curPlayer2 == 0:
+                hit_confirm_sound.play()
+            else:
+                hit_sound.play()
+            enemy_info.config(text= "HIT")
+        
+        elif player [j][i] == 3:
+            curPlayer3 -= 1
+
+            if curPlayer3 == 0:
+                hit_confirm_sound.play()
+            else:
+                hit_sound.play()
+            enemy_info.config(text= "HIT")
+        
+        else:
+            miss_sound.play()
+            print('miss')
+            enemy_info.config(text= "MISS")
+            
     def attack_boat(i, j, button):
         global player
         global curEnemy1
@@ -557,31 +603,36 @@ def attack():
             hit_confirm_sound.play()
             button.config(bg = 'red')
             print('hit')
+            player_info.config(text= "HIT")
 
         elif enemy[j][i] == 2:
             button.config(bg = 'red')
             curEnemy2 -= 1
 
-            if curEnemy1 == 0:
+            if curEnemy2 == 0:
                 hit_confirm_sound.play()
             else:
                 hit_sound.play()
             print('hit')
+            player_info.config(text= "HIT")
 
         elif enemy[j][i] == 3:
             curEnemy3 -= 1
 
-            if curEnemy1 == 0:
+            if curEnemy3 == 0:
                 hit_confirm_sound.play()
             else:
                 hit_sound.play()
             button.config(bg = 'red')
             print('hit')
+            player_info.config(text= "HIT")
 
         else:
             miss_sound.play()
             button.config(bg = 'white')
             print('miss')
+            player_info.config(text= "MISS")
+            enemy_attack()
 
         if curEnemy1 == 0 and curEnemy2 == 0 and curEnemy3 == 0:
             print('ganaste!')
