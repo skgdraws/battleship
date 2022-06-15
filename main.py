@@ -146,7 +146,7 @@ def game():
         elif barco == 3:
             player[j][i]= barco
             player[j][i+1]= barco
-            player[j][1+2]= barco
+            player[j][i+2]= barco
             print(f'barco fue puesto en {i},{j}')
         print (player)
         
