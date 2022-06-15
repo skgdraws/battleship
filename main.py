@@ -529,6 +529,21 @@ def attack():
     hit_confirm_sound.set_volume(0.35)
     miss_sound = pygame.mixer.Sound("assets/sound/sfx/miss.wav")
     miss_sound.set_volume(0.35)
+    
+    pos_boat1_label = tk.Label(text= boat1_pos, font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
+    pos_boat1_label.place(x= 200, y= 350 + 15)
+    pos_boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
+    a_canvas.create_image(100, 350, anchor= tk.N, image=pos_boat1)
+
+    pos_boat2_label = tk.Label(text= boat2_pos, font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
+    pos_boat2_label.place(x= 200, y=420 + 15)
+    pos_boat2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
+    a_canvas.create_image(100, 420, anchor= tk.N, image=pos_boat2)
+
+    pos_boat3_label = tk.Label(text= boat3_pos, font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
+    pos_boat3_label.place(x= 200, y=490 + 15)
+    pos_boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
+    a_canvas.create_image(100, 490, anchor= tk.N, image=pos_boat3)
 
     def attack_boat(i, j, button):
         global player
@@ -575,21 +590,6 @@ def attack():
             battle_theme.stop()
             title_theme.play()
             main()
-    
-    pos_boat1_label = tk.Label(text= boat1_pos, font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
-    pos_boat1_label.place(x= 200, y= 350 + 15)
-    pos_boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
-    a_canvas.create_image(100, 350, anchor= tk.N, image=pos_boat1)
-
-    pos_boat2_label = tk.Label(text= boat2_pos, font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
-    pos_boat2_label.place(x= 200, y=420 + 15)
-    pos_boat2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
-    a_canvas.create_image(100, 420, anchor= tk.N, image=pos_boat2)
-
-    pos_boat3_label = tk.Label(text= boat3_pos, font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
-    pos_boat3_label.place(x= 200, y=490 + 15)
-    pos_boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
-    a_canvas.create_image(100, 490, anchor= tk.N, image=pos_boat3)
 
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
