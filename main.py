@@ -48,12 +48,16 @@ enemy = [[0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0]]
 
 barco = 0
+place_boat1 = False
+place_boat2 = False
+place_boat3 = False
+
 title_theme.play(-1)
 
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
+    window.title('TitleScreen')
     canvas.pack()
-
 
     #Titulo
     title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
@@ -97,12 +101,13 @@ def main():
 
 def game():
     g_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
+    window.title('Placing Boats')
     g_canvas.pack()
 
     global barco
     global player
     global enemy
-
+    
     #Selección de Barcos (Imágenes)
     boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
     g_canvas.create_image(1150, 50, anchor= tk.N, image=boat1)
@@ -123,6 +128,22 @@ def game():
     boat3_b= tk.Button(g_canvas, text= "BARCO 3", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF",command= lambda: select_boat(3))
     boat3_b.place(x= 1100, y=550)
 
+    #Posición de los Barcos
+    pos_boat1_label = tk.Label(text= "Sin Poner", font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
+    pos_boat1_label.place(x= 200, y= 350 + 15)
+    pos_boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
+    g_canvas.create_image(100, 350, anchor= tk.N, image=pos_boat1)
+
+    pos_boat2_label = tk.Label(text= "Sin Poner", font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
+    pos_boat2_label.place(x= 200, y=420 + 15)
+    pos_boat2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
+    g_canvas.create_image(100, 420, anchor= tk.N, image=pos_boat2)
+
+    pos_boat3_label = tk.Label(text= "Sin Poner", font=("Sonic 1 HUD Font", 15), bg= "blue", fg= "#CDDEFF")
+    pos_boat3_label.place(x= 200, y=490 + 15)
+    pos_boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
+    g_canvas.create_image(100, 490, anchor= tk.N, image=pos_boat3)
+
     def open_a():
         title_theme.stop()
         battle_theme.play(-1)
@@ -131,22 +152,54 @@ def game():
         attack()
 
     attack_b= tk.Button(g_canvas, text= "ATACAR", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF", command= open_a)
-    attack_b.place(x= 100, y= 300)
+    attack_b.place(x= 100, y= 150)
 
     #Funciones para el tablero
     def place_boat(i, j, barco):
-        if barco == 1:
+
+        global place_boat1
+        global place_boat2
+        global place_boat3
+
+        if barco == 1 and not place_boat1:
             player[j][i]= barco
-            print(f'barco fue puesto en {i},{j}')
-        elif barco == 2:
+            pos_boat1_label.config(text= f"[{i},{j}]")
+            place_boat1 = True
+
+        elif barco == 2 and not place_boat2:
+            try:
+                player[j][i]= barco
+                player [j][i+1]= barco
+                pos_boat2_label.config(text= f"[{i},{j}], [{i+1},{j}]")
+                place_boat2 = True
+
+            except IndexError:
+                player[j][i]= barco
+                player [j][i-1]= barco
+                pos_boat2_label.config(text= f"[{i},{j}], [{i-1},{j}]")
+                place_boat2 = True
+
+        elif barco == 3 and not place_boat3:
             player[j][i]= barco
-            player [j][i+1]= barco
-            print(f'barco fue puesto en {i},{j}')
-        elif barco == 3:
-            player[j][i]= barco
-            player[j][i+1]= barco
-            player[j][i+2]= barco
-            print(f'barco fue puesto en {i},{j}')
+            try:
+                player[j][i+1]= barco
+                player[j][i+2]= barco
+                pos_boat3_label.config(text= f"[{i},{j}], [{i+1},{j}], [{i+2},{j}]")
+                place_boat3 = True
+
+            except IndexError:
+                player[j][i-1]= barco
+                try:
+                    player[j][i+1]= barco
+                    pos_boat3_label.config(text= f"[{i},{j}], [{i-1},{j}], [{i+1},{j}]")
+                    place_boat3 = True
+
+                except IndexError:
+                    player[j][i-1]= barco
+                    player[j][i-2]= barco
+                    pos_boat3_label.config(text= f"[{i},{j}], [{i-2},{j}], [{i-1},{j}]")
+                    place_boat3 = True
+
         print (player)
         
     def select_boat(value):
@@ -155,6 +208,47 @@ def game():
             barco = value
         else:
             print("You filthy hacker lol")
+
+    def enemy_boats(boat):
+        i = random.randint(0,9)
+        j = random.randint(0,9)
+
+        if boat == 1:
+            enemy[i][j] = boat
+            print(f"[{i},{j}]")
+            
+        if boat == 2:
+            try:
+                player[j][i]= barco
+                player [j][i+1]= barco
+                print(f"[{i},{j}], [{i+1},{j}]")
+
+            except IndexError:
+                player[j][i]= barco
+                player [j][i-1]= barco
+                print(f"[{i},{j}], [{i-1},{j}]")
+
+        if boat == 3:
+            enemy[j][i]= barco
+            try:
+                enemy[j][i+1]= barco
+                enemy[j][i+2]= barco
+                print(f"[{i},{j}], [{i+1},{j}], [{i+2},{j}]")
+
+            except IndexError:
+                enemy[j][i-1]= barco
+                try:
+                    enemy[j][i+1]= barco
+                    print(f"[{i},{j}], [{i+1},{j}], [{i-1},{j}]")
+
+                except IndexError:
+                    enemy[j][i-1]= barco
+                    enemy[j][i-2]= barco
+                    print(f"[{i},{j}], [{i-1},{j}], [{i-2},{j}]")
+
+    enemy_boats(1)
+    enemy_boats(2)
+    enemy_boats(3)
 
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
@@ -169,16 +263,16 @@ def game():
     a9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,0,barco))
     a10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,0,barco))
 
-    a1.place(x=250 + 100 , y= 100)
-    a2.place(x=250 + 150 , y= 100)
-    a3.place(x=250 + 200 , y= 100)
-    a4.place(x=250 + 250 , y= 100)
-    a5.place(x=250 + 300 , y= 100)
-    a6.place(x=250 + 350 , y= 100)
-    a7.place(x=250 + 400 , y= 100)
-    a8.place(x=250 + 450 , y= 100)
-    a9.place(x=250 + 500 , y= 100)
-    a10.place(x=250 + 550 , y= 100)
+    a1.place(x=300 + 100 , y= 100)
+    a2.place(x=300 + 150 , y= 100)
+    a3.place(x=300 + 200 , y= 100)
+    a4.place(x=300 + 250 , y= 100)
+    a5.place(x=300 + 300 , y= 100)
+    a6.place(x=300 + 350 , y= 100)
+    a7.place(x=300 + 400 , y= 100)
+    a8.place(x=300 + 450 , y= 100)
+    a9.place(x=300 + 500 , y= 100)
+    a10.place(x=300 + 550 , y= 100)
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
@@ -193,16 +287,16 @@ def game():
     b9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,1,barco))
     b10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,1,barco))
 
-    b1.place(x=250 + 100 , y= 150)
-    b2.place(x=250 + 150 , y= 150)
-    b3.place(x=250 + 200 , y= 150)
-    b4.place(x=250 + 250 , y= 150)
-    b5.place(x=250 + 300 , y= 150)
-    b6.place(x=250 + 350 , y= 150)
-    b7.place(x=250 + 400 , y= 150)
-    b8.place(x=250 + 450 , y= 150)
-    b9.place(x=250 + 500 , y= 150)
-    b10.place(x=250 + 550 , y= 150)
+    b1.place(x=300 + 100 , y= 150)
+    b2.place(x=300 + 150 , y= 150)
+    b3.place(x=300 + 200 , y= 150)
+    b4.place(x=300 + 250 , y= 150)
+    b5.place(x=300 + 300 , y= 150)
+    b6.place(x=300 + 350 , y= 150)
+    b7.place(x=300 + 400 , y= 150)
+    b8.place(x=300 + 450 , y= 150)
+    b9.place(x=300 + 500 , y= 150)
+    b10.place(x=300 + 550 , y= 150)
     
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
@@ -217,16 +311,16 @@ def game():
     c9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,2,barco))
     c10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,2,barco))
 
-    c1.place(x=250 + 100 , y= 200)
-    c2.place(x=250 + 150 , y= 200)
-    c3.place(x=250 + 200 , y= 200)
-    c4.place(x=250 + 250 , y= 200)
-    c5.place(x=250 + 300 , y= 200)
-    c6.place(x=250 + 350 , y= 200)
-    c7.place(x=250 + 400 , y= 200)
-    c8.place(x=250 + 450 , y= 200)
-    c9.place(x=250 + 500 , y= 200)
-    c10.place(x=250 + 550 , y= 200)
+    c1.place(x=300 + 100 , y= 200)
+    c2.place(x=300 + 150 , y= 200)
+    c3.place(x=300 + 200 , y= 200)
+    c4.place(x=300 + 250 , y= 200)
+    c5.place(x=300 + 300 , y= 200)
+    c6.place(x=300 + 350 , y= 200)
+    c7.place(x=300 + 400 , y= 200)
+    c8.place(x=300 + 450 , y= 200)
+    c9.place(x=300 + 500 , y= 200)
+    c10.place(x=300 + 550 , y= 200)
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
@@ -241,16 +335,16 @@ def game():
     d9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,3,barco))
     d10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,3,barco))
 
-    d1.place(x=250 + 100 , y= 250)
-    d2.place(x=250 + 150 , y= 250)
-    d3.place(x=250 + 200 , y= 250)
-    d4.place(x=250 + 250 , y= 250)
-    d5.place(x=250 + 300 , y= 250)
-    d6.place(x=250 + 350 , y= 250)
-    d7.place(x=250 + 400 , y= 250)
-    d8.place(x=250 + 450 , y= 250)
-    d9.place(x=250 + 500 , y= 250)
-    d10.place(x=250 + 550 , y= 250)
+    d1.place(x=300 + 100 , y= 250)
+    d2.place(x=300 + 150 , y= 250)
+    d3.place(x=300 + 200 , y= 250)
+    d4.place(x=300 + 250 , y= 250)
+    d5.place(x=300 + 300 , y= 250)
+    d6.place(x=300 + 350 , y= 250)
+    d7.place(x=300 + 400 , y= 250)
+    d8.place(x=300 + 450 , y= 250)
+    d9.place(x=300 + 500 , y= 250)
+    d10.place(x=300 + 550 , y= 250)
 
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
@@ -265,16 +359,16 @@ def game():
     e9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,4,barco))
     e10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,4,barco))
 
-    e1.place(x=250 + 100 , y= 300)
-    e2.place(x=250 + 150 , y= 300)
-    e3.place(x=250 + 200 , y= 300)
-    e4.place(x=250 + 250 , y= 300)
-    e5.place(x=250 + 300 , y= 300)
-    e6.place(x=250 + 350 , y= 300)
-    e7.place(x=250 + 400 , y= 300)
-    e8.place(x=250 + 450 , y= 300)
-    e9.place(x=250 + 500 , y= 300)
-    e10.place(x=250 + 550 , y= 300)
+    e1.place(x=300 + 100 , y= 300)
+    e2.place(x=300 + 150 , y= 300)
+    e3.place(x=300 + 200 , y= 300)
+    e4.place(x=300 + 250 , y= 300)
+    e5.place(x=300 + 300 , y= 300)
+    e6.place(x=300 + 350 , y= 300)
+    e7.place(x=300 + 400 , y= 300)
+    e8.place(x=300 + 450 , y= 300)
+    e9.place(x=300 + 500 , y= 300)
+    e10.place(x=300 + 550 , y= 300)
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
@@ -289,16 +383,16 @@ def game():
     f9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,5,barco))
     f10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,5,barco))
 
-    f1.place(x=250 + 100 , y= 350)
-    f2.place(x=250 + 150 , y= 350)
-    f3.place(x=250 + 200 , y= 350)
-    f4.place(x=250 + 250 , y= 350)
-    f5.place(x=250 + 300 , y= 350)
-    f6.place(x=250 + 350 , y= 350)
-    f7.place(x=250 + 400 , y= 350)
-    f8.place(x=250 + 450 , y= 350)
-    f9.place(x=250 + 500 , y= 350)
-    f10.place(x=250 + 550 , y= 350)
+    f1.place(x=300 + 100 , y= 350)
+    f2.place(x=300 + 150 , y= 350)
+    f3.place(x=300 + 200 , y= 350)
+    f4.place(x=300 + 250 , y= 350)
+    f5.place(x=300 + 300 , y= 350)
+    f6.place(x=300 + 350 , y= 350)
+    f7.place(x=300 + 400 , y= 350)
+    f8.place(x=300 + 450 , y= 350)
+    f9.place(x=300 + 500 , y= 350)
+    f10.place(x=300 + 550 , y= 350)
     
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
@@ -313,16 +407,16 @@ def game():
     g9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,6,barco))
     g10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,6,barco))
 
-    g1.place(x=250 + 100 , y= 400)
-    g2.place(x=250 + 150 , y= 400)
-    g3.place(x=250 + 200 , y= 400)
-    g4.place(x=250 + 250 , y= 400)
-    g5.place(x=250 + 300 , y= 400)
-    g6.place(x=250 + 350 , y= 400)
-    g7.place(x=250 + 400 , y= 400)
-    g8.place(x=250 + 450 , y= 400)
-    g9.place(x=250 + 500 , y= 400)
-    g10.place(x=250 + 550 , y= 400)
+    g1.place(x=300 + 100 , y= 400)
+    g2.place(x=300 + 150 , y= 400)
+    g3.place(x=300 + 200 , y= 400)
+    g4.place(x=300 + 250 , y= 400)
+    g5.place(x=300 + 300 , y= 400)
+    g6.place(x=300 + 350 , y= 400)
+    g7.place(x=300 + 400 , y= 400)
+    g8.place(x=300 + 450 , y= 400)
+    g9.place(x=300 + 500 , y= 400)
+    g10.place(x=300 + 550 , y= 400)
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
@@ -337,16 +431,16 @@ def game():
     h9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,7,barco))
     h10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,7,barco))
 
-    h1.place(x=250 + 100 , y= 450)
-    h2.place(x=250 + 150 , y= 450)
-    h3.place(x=250 + 200 , y= 450)
-    h4.place(x=250 + 250 , y= 450)
-    h5.place(x=250 + 300 , y= 450)
-    h6.place(x=250 + 350 , y= 450)
-    h7.place(x=250 + 400 , y= 450)
-    h8.place(x=250 + 450 , y= 450)
-    h9.place(x=250 + 500 , y= 450)
-    h10.place(x=250 + 550 , y= 450)
+    h1.place(x=300 + 100 , y= 450)
+    h2.place(x=300 + 150 , y= 450)
+    h3.place(x=300 + 200 , y= 450)
+    h4.place(x=300 + 250 , y= 450)
+    h5.place(x=300 + 300 , y= 450)
+    h6.place(x=300 + 350 , y= 450)
+    h7.place(x=300 + 400 , y= 450)
+    h8.place(x=300 + 450 , y= 450)
+    h9.place(x=300 + 500 , y= 450)
+    h10.place(x=300 + 550 , y= 450)
 
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
@@ -361,16 +455,16 @@ def game():
     i9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,8,barco))
     i10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,8,barco))
 
-    i1.place(x=250 + 100 , y= 500)
-    i2.place(x=250 + 150 , y= 500)
-    i3.place(x=250 + 200 , y= 500)
-    i4.place(x=250 + 250 , y= 500)
-    i5.place(x=250 + 300 , y= 500)
-    i6.place(x=250 + 350 , y= 500)
-    i7.place(x=250 + 400 , y= 500)
-    i8.place(x=250 + 450 , y= 500)
-    i9.place(x=250 + 500 , y= 500)
-    i10.place(x=250 + 550 , y= 500)
+    i1.place(x=300 + 100 , y= 500)
+    i2.place(x=300 + 150 , y= 500)
+    i3.place(x=300 + 200 , y= 500)
+    i4.place(x=300 + 250 , y= 500)
+    i5.place(x=300 + 300 , y= 500)
+    i6.place(x=300 + 350 , y= 500)
+    i7.place(x=300 + 400 , y= 500)
+    i8.place(x=300 + 450 , y= 500)
+    i9.place(x=300 + 500 , y= 500)
+    i10.place(x=300 + 550 , y= 500)
     #El Tablero BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 
     j1 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(0,9,barco))
@@ -384,21 +478,22 @@ def game():
     j9 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(8,9,barco))
     j10 = tk.Button(g_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: place_boat(9,9,barco))
 
-    j1.place(x=250 + 100 , y= 550)
-    j2.place(x=250 + 150 , y= 550)
-    j3.place(x=250 + 200 , y= 550)
-    j4.place(x=250 + 250 , y= 550)
-    j5.place(x=250 + 300 , y= 550)
-    j6.place(x=250 + 350 , y= 550)
-    j7.place(x=250 + 400 , y= 550)
-    j8.place(x=250 + 450 , y= 550)
-    j9.place(x=250 + 500 , y= 550)
-    j10.place(x=250 + 550 , y= 550)
+    j1.place(x=300 + 100 , y= 550)
+    j2.place(x=300 + 150 , y= 550)
+    j3.place(x=300 + 200 , y= 550)
+    j4.place(x=300 + 250 , y= 550)
+    j5.place(x=300 + 300 , y= 550)
+    j6.place(x=300 + 350 , y= 550)
+    j7.place(x=300 + 400 , y= 550)
+    j8.place(x=300 + 450 , y= 550)
+    j9.place(x=300 + 500 , y= 550)
+    j10.place(x=300 + 550 , y= 550)
 
     g_canvas.mainloop()
 
 def attack():
     a_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
+    window.title('Attacking')
     a_canvas.pack()
 
     def attack_boat(i, j):
@@ -406,16 +501,16 @@ def attack():
 
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
-    a1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    a2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    a3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    a4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    a5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    a6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    a7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    a8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    a9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
-    a10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,9))
+    a1 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(0,0))
+    a2 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(1,0))
+    a3 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(2,0))
+    a4 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(3,0))
+    a5 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(4,0))
+    a6 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(5,0))
+    a7 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(6,0))
+    a8 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(7,0))
+    a9 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(8,0))
+    a10 = tk.Button(a_canvas, text= "   ", font= ("Sonic 1 HUD Font", 15), bg= "#444444", fg= "#CDDEFF", command= lambda: attack_boat(9,0))
 
     a1.place(x=250 + 100 , y= 100)
     a2.place(x=250 + 150 , y= 100)
@@ -648,6 +743,7 @@ def attack():
 
 def play():
     p_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
+    window.title('File System')
     p_canvas.pack()
     
     #Boton para cerrar selccion de partida
@@ -692,6 +788,7 @@ def play():
 def highscore():
 
     hs_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
+    window.title('File System')
     hs_canvas.pack()
 
     score1 = tk.Label(text=f"1st.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
@@ -843,4 +940,4 @@ def help():
 
     help_canvas.mainloop()
 
-main()
+game()
