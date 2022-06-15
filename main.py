@@ -49,12 +49,12 @@ enemy = [[0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0]]
 
 barco = 0
+title_theme.play(-1)
 
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     canvas.pack()
 
-    title_theme.play(-1)
 
     #Titulo
     title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
