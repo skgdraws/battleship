@@ -45,7 +45,7 @@ enemy = [[0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0]]
 
-barco = "debug"
+barco = 0
 
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
@@ -110,31 +110,35 @@ def game():
     #g_canvas.create_image(1085, 450, anchor= tk.NW, image=boat3)
 
     #Selección de Barcos (Botones)
-    boat1_b= tk.Button(g_canvas, text= "BARCO 1", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF")
+    boat1_b= tk.Button(g_canvas, text= "BARCO 1", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF", command= lambda: select_boat(1))
     boat1_b.place(x= 1100, y=150)
 
-    boat2_b= tk.Button(g_canvas, text= "BARCO 2", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF")
+    boat2_b= tk.Button(g_canvas, text= "BARCO 2", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF",command= lambda: select_boat(2))
     boat2_b.place(x= 1100, y=350)
 
-    boat3_b= tk.Button(g_canvas, text= "BARCO 3", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF")
+    boat3_b= tk.Button(g_canvas, text= "BARCO 3", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF",command= lambda: select_boat(3))
     boat3_b.place(x= 1100, y=550)
 
     #Funciones para el tablero
     def place_boat(i, j, barco):
         if barco == 1:
             player[j][i]= barco
+            print(f'barco fue puesto en {i},{j}')
         elif barco == 2:
             player[j][i]= barco
             player [j][i+1]= barco
+            print(f'barco fue puesto en {i},{j}')
         elif barco == 3:
             player[j][i]= barco
             player[j][i+1]= barco
             player[j][1+2]= barco
-        print(player)
-
+            print(f'barco fue puesto en {i},{j}')
+        print (player)
+        
     def select_boat(value):
+        global barco 
         if value == 1 or value == 2 or value == 3:
-            boat = value
+            barco = value
         else:
             print("You filthy hacker lol")
 
