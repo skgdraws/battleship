@@ -15,15 +15,18 @@ window.resizable(False, False)
 
 #Efectos de Sonido
 select1 = pygame.mixer.Sound("assets/sound/sfx/select1.wav")
-select1.set_volume(0.5)
+select1.set_volume(0.35)
 select2 = pygame.mixer.Sound("assets/sound/sfx/select2.wav")
-select2.set_volume(0.5)
+select2.set_volume(0.35)
 select3 = pygame.mixer.Sound("assets/sound/sfx/select3.wav")
-select3.set_volume(0.5)
+select3.set_volume(0.35)
 select_sounds = [select1, select2, select3]
 
 title_theme = pygame.mixer.Sound("assets/sound/music/title-theme.mp3")
-title_theme.set_volume(0.5)
+title_theme.set_volume(0.35)
+
+battle_theme = pygame.mixer.Sound("assets/sound/music/declare-war.mp3")
+battle_theme.set_volume(0.35)
 
 player = [[0,0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0,0],
@@ -53,7 +56,7 @@ def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
     canvas.pack()
 
-    title_theme.play()
+    title_theme.play(-1)
 
     #Titulo
     #title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
@@ -124,6 +127,8 @@ def game():
     boat3_b.place(x= 1100, y=550)
 
     def open_a():
+        title_theme.stop()
+        battle_theme.play(-1)
         g_canvas.destroy()
         g_canvas.quit
         attack()
