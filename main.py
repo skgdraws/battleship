@@ -1,9 +1,7 @@
-from calendar import c
 import random
-from re import I
 import tkinter as tk
 import pygame
-#from PIL import ImageTk, Image
+from PIL import ImageTk, Image
 from support import *
 import pathlib
 
@@ -59,8 +57,8 @@ def main():
     title_theme.play(-1)
 
     #Titulo
-    #title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
-    #canvas.create_image(240, 65, anchor= tk.NW, image=title)
+    title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
+    canvas.create_image(240, 65, anchor= tk.NW, image=title)
 
     #Boton seleccionar una partida
     def open_p():
@@ -107,14 +105,14 @@ def game():
     global enemy
 
     #Selección de Barcos (Imágenes)
-    #boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
-    #g_canvas.create_image(1150, 50, anchor= tk.N, image=boat1)
+    boat1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
+    g_canvas.create_image(1150, 50, anchor= tk.N, image=boat1)
 
-    #boat2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
-    #g_canvas.create_image(1150, 250, anchor= tk.N, image=boat2)
+    boat2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
+    g_canvas.create_image(1150, 250, anchor= tk.N, image=boat2)
 
-    #boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
-    #g_canvas.create_image(1085, 450, anchor= tk.NW, image=boat3)
+    boat3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
+    g_canvas.create_image(1085, 450, anchor= tk.NW, image=boat3)
 
     #Selección de Barcos (Botones)
     boat1_b= tk.Button(g_canvas, text= "BARCO 1", font= ("Sonic 1 HUD Font", 20), bg= "#4D6AA0", fg="#CDDEFF", command= lambda: select_boat(1))
@@ -803,8 +801,8 @@ def help():
     close_help_b= tk.Button(help_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_help)
     close_help_b.place(x= 50, y= 40)
 
-    #ship1= ImageTk.PhotoImage(Image.open('assets/images/barco3-side.png'))
-    #help_canvas.create_image(100, 650, anchor= tk.NW, image=ship1)
+    ship1= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
+    help_canvas.create_image(100, 650, anchor= tk.NW, image=ship1)
 
     title1= tk.Label(help_canvas, text= "Hola! Bienvenido a Battleship", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title1.place(x= 50, y=110)
