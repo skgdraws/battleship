@@ -3,7 +3,6 @@ import tkinter as tk
 import pygame
 from PIL import ImageTk, Image
 from support import *
-import pathlib
 
 pygame.init()
 window= tk.Tk()
