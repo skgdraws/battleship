@@ -1,4 +1,5 @@
 import random
+import time
 import tkinter as tk
 import pygame
 from PIL import ImageTk, Image
@@ -64,11 +65,16 @@ curPlayer1 = 1
 curPlayer2 = 2
 curPlayer3 = 3
 
+
+turnos = 0
+aciertos = 0
+fallos = 0
+
 title_theme.play(-1)
 
 def main():
     canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
-    window.title('TitleScreen')
+    window.title('Battleship! - TitleScreen')
     canvas.pack()
 
     #Titulo
@@ -113,7 +119,7 @@ def main():
 
 def game():
     g_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
-    window.title('Placing Boats')
+    window.title('Battleship! - Placing Boats')
     g_canvas.pack()
 
     global barco
@@ -520,8 +526,30 @@ def game():
 
 def attack():
     a_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="blue")
-    window.title('Attacking')
+    window.title('Battleship! - Attack')
     a_canvas.pack()
+
+    inicio = time.time()
+    global turnos
+    global aciertos
+    global fallos
+    global curEnemy1 
+    global curEnemy2 
+    global curEnemy3 
+    global curPlayer1
+    global curPlayer2
+    global curPlayer3
+    
+    turnos = 0
+    aciertos = 0
+    fallos = 0
+
+    curEnemy1 = 1
+    curEnemy2 = 2
+    curEnemy3 = 3
+    curPlayer1 = 1
+    curPlayer2 = 2
+    curPlayer3 = 3
 
     hit_sound = pygame.mixer.Sound('assets/sound/sfx/hit.wav')
     hit_sound.set_volume(0.35)
@@ -559,6 +587,10 @@ def attack():
         global curPlayer1
         global curPlayer2
         global curPlayer3
+        
+        global turnos
+        global aciertos
+        global fallos
 
         i = random.randint(0,9)
         j = random.randint(0,9)
@@ -566,10 +598,12 @@ def attack():
         if player [j][i] == 1:
             curPlayer1 -= 1
             hit_confirm_sound.play()
+            turnos += 1
             enemy_info.config(text= "HIT")
         
         elif player [j][i] == 2:
             curPlayer2 -= 1
+            turnos += 1
 
             if curPlayer2 == 0:
                 hit_confirm_sound.play()
@@ -579,6 +613,7 @@ def attack():
         
         elif player [j][i] == 3:
             curPlayer3 -= 1
+            turnos += 1
 
             if curPlayer3 == 0:
                 hit_confirm_sound.play()
@@ -588,18 +623,34 @@ def attack():
         
         else:
             miss_sound.play()
+            turnos += 1
             print('miss')
             enemy_info.config(text= "MISS")
+
+        if curPlayer1 == 0 and curPlayer2 == 0 and curPlayer3 == 0:
+            print('perdiste :(')
+            a_canvas.destroy()
+            a_canvas.quit
+            battle_theme.stop()
+            title_theme.play()
+            fin = time.time()
+            tiempo = int(fin - inicio)
+            gameOver(turnos, tiempo, fallos, aciertos)
             
     def attack_boat(i, j, button):
-        global player
         global curEnemy1
         global curEnemy2
         global curEnemy3
+        global turnos
+        global aciertos
+        global fallos
+
         print(f"[{i},{j}]")
 
         if enemy[j][i] == 1:
             curEnemy1 -= 1
+            turnos += 1
+            aciertos += 1
             hit_confirm_sound.play()
             button.config(bg = 'red')
             print('hit')
@@ -608,7 +659,8 @@ def attack():
         elif enemy[j][i] == 2:
             button.config(bg = 'red')
             curEnemy2 -= 1
-
+            turnos += 1
+            aciertos += 1
             if curEnemy2 == 0:
                 hit_confirm_sound.play()
             else:
@@ -618,7 +670,8 @@ def attack():
 
         elif enemy[j][i] == 3:
             curEnemy3 -= 1
-
+            turnos += 1
+            aciertos += 1
             if curEnemy3 == 0:
                 hit_confirm_sound.play()
             else:
@@ -629,6 +682,8 @@ def attack():
 
         else:
             miss_sound.play()
+            turnos += 1
+            fallos += 1
             button.config(bg = 'white')
             print('miss')
             player_info.config(text= "MISS")
@@ -640,7 +695,9 @@ def attack():
             a_canvas.quit
             battle_theme.stop()
             title_theme.play()
-            main()
+            fin = time.time()
+            tiempo = fin - inicio
+            gameOver(turnos, tiempo, fallos, aciertos)
 
     #El Tablero AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
@@ -884,10 +941,51 @@ def attack():
 
     a_canvas.mainloop()
 
+def gameOver(turnos, tiempo, fallos, aciertos):
+    o_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
+    window.title('Battleship! - Game Over')
+    o_canvas.pack()
+
+    #Titulo
+    title= ImageTk.PhotoImage(Image.open('assets/images/logo.png'))
+    o_canvas.create_image(240, 65, anchor= tk.NW, image=title)
+    
+    #Calcula los turnos
+    turnos_label = tk.Label(text= f"Turnos: {turnos}", font=("Sonic 1 HUD Font", 35), bg= 'black', fg= 'white')
+    turnos_label.place(x=150, y=300)
+
+    #Calcula los Tiempo de Partida
+    tiempo_label = tk.Label(text= f"Tiempo de Partida: {tiempo}", font=("Sonic 1 HUD Font", 35), bg= 'black', fg= 'white')
+    tiempo_label.place(x=150, y=380)
+
+    #Calcula los Tiempo de Partida
+    aciertos_label = tk.Label(text= f"Aciertos del Jugador: {aciertos}", font=("Sonic 1 HUD Font", 35), bg= 'black', fg= 'white')
+    aciertos_label.place(x=150, y=460)
+
+    #Calcula los Tiempo de Partida
+    fallos_label = tk.Label(text= f"Fallos del Jugador: {fallos}", font=("Sonic 1 HUD Font", 35), bg= 'black', fg= 'white')
+    fallos_label.place(x=150, y=540)
+
+    var = tk.StringVar()
+    entry = tk.Entry(font=("Sonic 1 HUD Font", 35), textvariable=var, justify=tk.CENTER, width= 10)
+    entry.place(x=950, y=375)
+
+    def saving_the_funni():
+        if var.get() != '':
+            save_data(turnos, var.get())
+            select_sounds[random.randint(0,2)].play()
+            o_canvas.destroy()
+            o_canvas.quit
+            highscore()
+
+    save_button = tk.Button(o_canvas, text="Guardar Nombre", font=("Sonic 1 HUD Font", 20), fg="#ffffff", bg="#18191c", command=saving_the_funni)
+    save_button.place(x = 1000, y = 450)
+
+    o_canvas.mainloop()
 
 def play():
     p_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
-    window.title('File System')
+    window.title('Battleship! - File System')
     p_canvas.pack()
     
     #Boton para cerrar selccion de partida
@@ -932,7 +1030,7 @@ def play():
 def highscore():
 
     hs_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
-    window.title('File System')
+    window.title('Battleship! - Hall of Fame')
     hs_canvas.pack()
 
     score1 = tk.Label(text=f"1st.", font=("Sonic 1 HUD Font", 25), fg='#ffffff', bg="#000000")
@@ -1038,6 +1136,7 @@ def highscore():
 
 def help():
     help_canvas= tk.Canvas(window, width=1280, height=720, borderwidth=0, highlightthickness=0, bg="black")
+    window.title('Battleship! - Help Screen')
     help_canvas.pack()
 
     #Boton para cerrar ayuda
@@ -1084,4 +1183,4 @@ def help():
 
     help_canvas.mainloop()
 
-game()
+main()
