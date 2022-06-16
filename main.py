@@ -1148,8 +1148,14 @@ def help():
     close_help_b= tk.Button(help_canvas, text= "Volver", font= ("Sonic 1 HUD Font", 20), bg= "black", fg="white", command= close_help)
     close_help_b.place(x= 50, y= 40)
 
-    ship1= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
-    help_canvas.create_image(100, 650, anchor= tk.NW, image=ship1)
+    ship3= ImageTk.PhotoImage(Image.open('assets/images/barco3.png'))
+    help_canvas.create_image(100, 590, anchor= tk.NW, image=ship3)
+
+    ship2= ImageTk.PhotoImage(Image.open('assets/images/barco2.png'))
+    help_canvas.create_image(500, 590, anchor= tk.NW, image=ship2)
+
+    ship1= ImageTk.PhotoImage(Image.open('assets/images/barco1.png'))
+    help_canvas.create_image(1000, 590, anchor= tk.NW, image=ship1)
 
     title1= tk.Label(help_canvas, text= "Hola! Bienvenido a Battleship", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title1.place(x= 50, y=110)
@@ -1157,29 +1163,26 @@ def help():
     title2= tk.Label(help_canvas, text= "En este juego, tu objetivo sera hundir los tres barcos enemigos", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title2.place(x= 50, y=160)
 
-    title3= tk.Label(help_canvas, text= "Esto sera logrado mediante el uso de dos tableros de 10x10", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title3= tk.Label(help_canvas, text= "Esto sera logrado mediante el uso de un tablero de 10x10", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title3.place(x= 50, y=210)
 
-    title4= tk.Label(help_canvas, text= "El primero de estos sera el tablero del jugador, en el cual debera colocar 3 barcos ", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title4= tk.Label(help_canvas, text= "El jugador debera colocar 3 barcos en el tablero", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title4.place(x= 50, y=260)
 
-    title5= tk.Label(help_canvas, text= "ya sea de manera horizontal o vertical", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title5= tk.Label(help_canvas, text= "Los barcos tiene tamaños de 1, 2 y 3 espacios cada uno", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title5.place(x= 50, y=310)
 
-    title6= tk.Label(help_canvas, text= "En este mismo tablero es donde se mostraran las coordenadas en donde dispara la computadora", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title6= tk.Label(help_canvas, text= "Luego deberá elegir en el tablero, las coordenadas donde piensa que hay un barco enemigo", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title6.place(x= 50, y=360)
 
-    title7= tk.Label(help_canvas, text= "El otro tablero, representara el de la computadora y en este no se mostraran los barcos enemigos", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title7= tk.Label(help_canvas, text= "Al clickear en este, se le avisará al jugador si falló, si le dio a un barco, o si hundió algún barco", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title7.place(x= 50, y=410)
 
-    title8= tk.Label(help_canvas, text= "Solo se mostrara los puntos donde el jugador ya disparo", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title8= tk.Label(help_canvas, text= "A continuación, la computadora eligirá un punto en donde disparar para asi hundir los barcos del jugador", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title8.place(x= 50, y=460)
 
-    title9= tk.Label(help_canvas, text= "La manera de hundir un barco, es disparando en cada uno de los espacios que ocupa el mismo", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
+    title9= tk.Label(help_canvas, text= "El primero en hundir los barcos del oponente, será el ganador!", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
     title9.place(x= 50, y=510)
-
-    title0= tk.Label(help_canvas, text= "El primero en hundir los barcos del oponente, sera el ganador!", font= ("Sonic 1 HUD Font", 20), bg= "black", fg= "white")
-    title0.place(x= 50, y=560)
 
     help_canvas.mainloop()
 
